@@ -130,7 +130,10 @@ export default function ActivateForm() {
           <div className="text-[13px] text-[#C5413A] -mt-[14px] mb-[14px]">{errors.password}</div>
         )}
 
-        <label className="flex items-start gap-[12px] bg-[#FBF1D6] rounded-[14px] p-[14px_16px] mb-[24px] cursor-pointer">
+        <label
+          className="flex items-start gap-[12px] bg-[#FBF1D6] rounded-[14px] p-[14px_16px] mb-[24px] cursor-pointer"
+          onClick={() => setPhotoConsent(!photoConsent)}
+        >
           <span
             className={`flex-none w-[24px] h-[24px] rounded-[8px] flex items-center justify-center mt-[1px] ${
               photoConsent ? "bg-[#5FB97E]" : "bg-[#EADFD0]"
