@@ -1,6 +1,6 @@
 # SPEC 01 — Home `/` con feed estático (plantilla `feed.dc.html`)
 
-> **Estado:** Implementado
+> **Estado:** Aprobado
 > **Depende de:** ninguna
 > **Fecha:** 2026-09-20
 > **Objetivo:** Implementar la pantalla de `references/pantallas/feed.dc.html` como home `/`, visualmente idéntica al mockup, con datos mock estáticos, sin autenticación ni base de datos.
