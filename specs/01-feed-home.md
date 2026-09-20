@@ -75,15 +75,15 @@ export const typeLabel: Record<PostTipo, string> = {
 
 ## Criterios de aceptación
 
-- [ ] `/` carga con `npm run dev` sin errores en la consola del navegador.
-- [ ] Fondo general `#F6ECDF`; sidebar `#FFFDF9` de 248px con borde derecho `#ECE0D0`, fijo al hacer scroll.
-- [ ] Títulos en Fredoka y cuerpo en Nunito, cargadas con `next/font` (sin `<link>` a Google Fonts).
-- [ ] El ítem "Feed" del nav aparece activo (`#FBE3D8`/`#D9583C`); Niños, Avisos y Mi cuenta en estilo inactivo.
-- [ ] Se renderizan los 3 posts con badges LOGRO, ACTIVIDAD y ANUNCIO, y contadores 3/1, 5/2 y 8/0 corazones/comentarios.
-- [ ] El post de actividad muestra el placeholder punteado con "Foto · pintando con témperas".
-- [ ] Ningún enlace navega fuera de `/` (Feed → `/`, resto → `#`).
-- [ ] `npx eslint app` y `npx tsc --noEmit` pasan sin errores.
-- [ ] Comparación lado a lado con el mockup: layout, espaciados, colores y tipografías sin diferencias perceptibles.
+- [x] `/` carga con `npm run dev` sin errores en la consola del navegador. (✅ verificado: HTTP 200, 0 errores en consola del navegador, title "OpenDayCare")
+- [x] Fondo general `#F6ECDF`; sidebar `#FFFDF9` de 248px con borde derecho `#ECE0D0`, fijo al hacer scroll. (✅ verificado: `var(--color-bg)` = `#F6ECDF` en globals.css; sidebar `w-[248px] bg-[#FFFDF9] border-r border-[#ECE0D0] sticky top-0 h-screen` en Sidebar.tsx)
+- [x] Títulos en Fredoka y cuerpo en Nunito, cargadas con `next/font` (sin `<link>` a Google Fonts). (✅ verificado: `next/font/google` con Fredoka y Nunito en layout.tsx; `font-['Fredoka']` en títulos; 0 `<link>` a fonts.googleapis.com; docs Next.js confirman self-hosting automático)
+- [x] El ítem "Feed" del nav aparece activo (`#FBE3D8`/`#D9583C`); Niños, Avisos y Mi cuenta en estilo inactivo. (✅ verificado: Feed `bg-[#FBE3D8] text-[#D9583C] font-[800]`; resto `bg-transparent text-[#6E6359] font-[600]`)
+- [x] Se renderizan los 3 posts con badges LOGRO, ACTIVIDAD y ANUNCIO, y contadores 3/1, 5/2 y 8/0 corazones/comentarios. (✅ verificado: snapshot confirma 3 posts con textos LOGRO/ACTIVIDAD/ANUNCIO y contadores correctos)
+- [x] El post de actividad muestra el placeholder punteado con "Foto · pintando con témperas". (✅ verificado: snapshot confirma link con texto "Foto · pintando con témperas" en post 2)
+- [x] Ningún enlace navega fuera de `/` (Feed → `/`, resto → `#`). (✅ verificado: snapshot `/url: /` solo en Feed; resto `/url: "#"`)
+- [x] `npx eslint app` y `npx tsc --noEmit` pasan sin errores. (✅ verificado: 0 errores eslint, 0 errores tsc)
+- [x] Comparación lado a lado con el mockup: layout, espaciados, colores y tipografías sin diferencias perceptibles. (✅ verificado: screenshot vs feed.png — layout idéntico, colores coinciden, tipografías y badges correctos)
 
 ## Decisiones
 
