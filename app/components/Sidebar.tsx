@@ -1,7 +1,9 @@
+import Link from "next/link";
+
 export default function Sidebar() {
   return (
     <aside className="w-[248px] flex-none bg-[#FFFDF9] border-r border-[#ECE0D0] flex flex-col p-6 px-4 sticky top-0 h-screen">
-      <a href="/" className="flex items-center gap-[11px] pb-[22px]">
+      <Link href="/" className="flex items-center gap-[11px] pb-[22px]">
         <div className="w-[38px] h-[38px] rounded-[12px] bg-[linear-gradient(155deg,#F8C3A8,_#F2937A)] flex items-center justify-center flex-none">
           <svg
             width="21"
@@ -23,7 +25,7 @@ export default function Sidebar() {
           </div>
           <div className="text-[11.5px] text-[#A89A8B] mt-[2px]">Sala Soles</div>
         </div>
-      </a>
+      </Link>
 
       <a
         href="#"
@@ -45,7 +47,7 @@ export default function Sidebar() {
       </a>
 
       <nav className="flex flex-col gap-1 flex-1">
-        <a
+        <Link
           href="/"
           className="flex items-center gap-3 p-[11px_12px] rounded-[12px] bg-[#FBE3D8] text-[#D9583C] font-[800] text-[14.5px]"
         >
@@ -62,7 +64,7 @@ export default function Sidebar() {
             <path d="M3 9.5 12 3l9 6.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z" />
           </svg>
           Feed
-        </a>
+        </Link>
         <a
           href="#"
           className="flex items-center gap-3 p-[11px_12px] rounded-[12px] bg-transparent text-[#6E6359] font-[600] text-[14.5px]"
