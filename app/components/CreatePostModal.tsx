@@ -19,6 +19,26 @@ type PhotoPreview = {
 
 const INITIAL_PHOTOS: PhotoPreview[] = [{ id: "mock", url: null }];
 
+type FormErrors = {
+  recipients?: string;
+  type?: string;
+  description?: string;
+};
+
+function validate(
+  selectedChildSlugs: string[],
+  allClassroom: boolean,
+  selectedType: "" | PostTypeKey,
+  description: string
+): FormErrors {
+  const errors: FormErrors = {};
+  if (selectedChildSlugs.length === 0 && !allClassroom)
+    errors.recipients = "Elegí al menos un niño o Toda la sala.";
+  if (!selectedType) errors.type = "Elegí un tipo de publicación.";
+  if (!description.trim()) errors.description = "La descripción es requerida.";
+  return errors;
+}
+
 export default function CreatePostModal() {
   const [open, setOpen] = useState(false);
   const [selectedChildSlugs, setSelectedChildSlugs] = useState<string[]>([]);
@@ -26,6 +46,9 @@ export default function CreatePostModal() {
   const [selectedType, setSelectedType] = useState<"" | PostTypeKey>("");
   const [photos, setPhotos] = useState<PhotoPreview[]>(INITIAL_PHOTOS);
   const [isFileDragOver, setIsFileDragOver] = useState(false);
+  const [description, setDescription] = useState("");
+  const [errors, setErrors] = useState<FormErrors>({});
+  const [touched, setTouched] = useState<Record<string, boolean>>({});
   const fileInputRef = useRef<HTMLInputElement>(null);
   const dragIdRef = useRef<string | null>(null);
 
@@ -33,6 +56,9 @@ export default function CreatePostModal() {
     setSelectedChildSlugs([]);
     setAllClassroom(false);
     setSelectedType("");
+    setDescription("");
+    setErrors({});
+    setTouched({});
     setPhotos((prev) => {
       prev.forEach((photo) => {
         if (photo.url) URL.revokeObjectURL(photo.url);
@@ -51,11 +77,13 @@ export default function CreatePostModal() {
       prev.includes(slug) ? prev.filter((s) => s !== slug) : [...prev, slug]
     );
     setAllClassroom(false);
+    if (errors.recipients) setErrors({ ...errors, recipients: undefined });
   };
 
   const toggleAllClassroom = () => {
     setAllClassroom((prev) => !prev);
     setSelectedChildSlugs([]);
+    if (errors.recipients) setErrors({ ...errors, recipients: undefined });
   };
 
   const addFiles = (files: FileList | File[]) => {
@@ -145,9 +173,32 @@ export default function CreatePostModal() {
     };
   }, [open]);
 
+  const handleBlur = (field: string) => {
+    setTouched((prev) => ({ ...prev, [field]: true }));
+    setErrors(
+      validate(selectedChildSlugs, allClassroom, selectedType, description)
+    );
+  };
+
+  const handlePublish = () => {
+    setTouched({ recipients: true, type: true, description: true });
+    const newErrors = validate(
+      selectedChildSlugs,
+      allClassroom,
+      selectedType,
+      description
+    );
+    setErrors(newErrors);
+    if (Object.keys(newErrors).length > 0) return;
+    closeModal();
+  };
+
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
+    handlePublish();
   };
+
+  const showError = (field: keyof FormErrors) => touched[field] && errors[field];
 
   return (
     <>
@@ -211,7 +262,11 @@ export default function CreatePostModal() {
               <div className="text-[12px] font-[800] tracking-[.7px] text-[#94887B] mb-[10px]">
                 PARA
               </div>
-              <div className="flex flex-wrap gap-[9px] mb-[22px]">
+              <div
+                className={`flex flex-wrap gap-[9px] ${
+                  showError("recipients") ? "mb-[6px]" : "mb-[22px]"
+                }`}
+              >
                 {children.map((child) => {
                   const selected = selectedChildSlugs.includes(child.slug);
                   return (
@@ -250,18 +305,30 @@ export default function CreatePostModal() {
                   Toda la sala
                 </button>
               </div>
+              {showError("recipients") && (
+                <p className="text-[13px] text-[#C5413A] mb-[22px]">
+                  {errors.recipients}
+                </p>
+              )}
 
               <div className="text-[12px] font-[800] tracking-[.7px] text-[#94887B] mb-[10px]">
                 TIPO
               </div>
-              <div className="flex flex-wrap gap-[9px] mb-[22px]">
+              <div
+                className={`flex flex-wrap gap-[9px] ${
+                  showError("type") ? "mb-[6px]" : "mb-[22px]"
+                }`}
+              >
                 {postTypes.map((type) => {
                   const selected = selectedType === type.key;
                   return (
                     <button
                       key={type.key}
                       type="button"
-                      onClick={() => setSelectedType(type.key)}
+                      onClick={() => {
+                        setSelectedType(type.key);
+                        if (errors.type) setErrors({ ...errors, type: undefined });
+                      }}
                       className="py-[8px] px-[16px] rounded-full border-none font-[800] text-[13.5px] cursor-pointer"
                       style={
                         selected
@@ -274,14 +341,35 @@ export default function CreatePostModal() {
                   );
                 })}
               </div>
+              {showError("type") && (
+                <p className="text-[13px] text-[#C5413A] mb-[22px]">
+                  {errors.type}
+                </p>
+              )}
 
               <div className="text-[12px] font-[800] tracking-[.7px] text-[#94887B] mb-[10px]">
                 DESCRIPCIÓN
               </div>
               <textarea
+                value={description}
+                onChange={(e) => {
+                  setDescription(e.target.value);
+                  if (errors.description)
+                    setErrors({ ...errors, description: undefined });
+                }}
+                onBlur={() => handleBlur("description")}
                 placeholder="Contá cómo le fue hoy…"
-                className="w-full min-h-[120px] resize-y py-[14px] px-[16px] rounded-[14px] border-[1.5px] border-[#EADFD0] bg-white text-[15px] text-[#3F362E] leading-[1.5] placeholder:text-[#B6A99B] mb-[22px]"
+                className={`w-full min-h-[120px] resize-y py-[14px] px-[16px] rounded-[14px] border-[1.5px] bg-white text-[15px] text-[#3F362E] leading-[1.5] placeholder:text-[#B6A99B] ${
+                  showError("description")
+                    ? "border-[#C5503A] mb-[6px]"
+                    : "border-[#EADFD0] mb-[22px]"
+                }`}
               />
+              {showError("description") && (
+                <p className="text-[13px] text-[#C5413A] mb-[22px]">
+                  {errors.description}
+                </p>
+              )}
 
               <div className="text-[12px] font-[800] tracking-[.7px] text-[#94887B] mb-[10px]">
                 FOTOS
