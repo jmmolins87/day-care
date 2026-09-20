@@ -2,12 +2,13 @@
 
 import { useState, useEffect, useCallback, type FormEvent } from "react";
 import { children } from "@/app/data/children";
-import { postTypes } from "@/app/data/postTypes";
+import { postTypes, type PostTypeKey } from "@/app/data/postTypes";
 
 export default function CreatePostModal() {
   const [open, setOpen] = useState(false);
   const [selectedChildSlugs, setSelectedChildSlugs] = useState<string[]>([]);
   const [allClassroom, setAllClassroom] = useState(false);
+  const [selectedType, setSelectedType] = useState<"" | PostTypeKey>("");
 
   const closeModal = useCallback(() => setOpen(false), []);
 
@@ -149,19 +150,24 @@ export default function CreatePostModal() {
                 TIPO
               </div>
               <div className="flex flex-wrap gap-[9px] mb-[22px]">
-                {postTypes.map((type) => (
-                  <button
-                    key={type.key}
-                    type="button"
-                    className="py-[8px] px-[16px] rounded-full border-none font-[800] text-[13.5px] cursor-pointer"
-                    style={{
-                      backgroundColor: type.soft.bg,
-                      color: type.soft.color,
-                    }}
-                  >
-                    {type.label}
-                  </button>
-                ))}
+                {postTypes.map((type) => {
+                  const selected = selectedType === type.key;
+                  return (
+                    <button
+                      key={type.key}
+                      type="button"
+                      onClick={() => setSelectedType(type.key)}
+                      className="py-[8px] px-[16px] rounded-full border-none font-[800] text-[13.5px] cursor-pointer"
+                      style={
+                        selected
+                          ? { backgroundColor: type.solid, color: "#fff" }
+                          : { backgroundColor: type.soft.bg, color: type.soft.color }
+                      }
+                    >
+                      {type.label}
+                    </button>
+                  );
+                })}
               </div>
 
               <div className="text-[12px] font-[800] tracking-[.7px] text-[#94887B] mb-[10px]">
