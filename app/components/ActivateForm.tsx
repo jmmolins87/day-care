@@ -14,7 +14,6 @@ export default function ActivateForm() {
     code?: string;
     email?: string;
     password?: string;
-    consent?: string;
   }>({});
 
   const validate = () => {
@@ -29,9 +28,6 @@ export default function ActivateForm() {
     }
     if (!password.trim()) {
       newErrors.password = "La contraseña es requerida.";
-    }
-    if (!photoConsent) {
-      newErrors.consent = "Debés autorizar para continuar.";
     }
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -159,9 +155,6 @@ export default function ActivateForm() {
             la app.
           </span>
         </label>
-        {errors.consent && (
-          <div className="text-[13px] text-[#C5413A] -mt-[18px] mb-[18px]">{errors.consent}</div>
-        )}
 
         <button
           type="submit"

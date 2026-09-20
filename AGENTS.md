@@ -51,3 +51,4 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 ## Reglas del Agente
 
 - Responder siempre en español
+- No levantar el servidor nunca sin mi permiso
