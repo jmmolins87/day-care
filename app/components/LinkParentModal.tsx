@@ -1,6 +1,11 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import {
+  useState,
+  useEffect,
+  useCallback,
+  type FormEvent,
+} from "react";
 import { invitation } from "@/app/data/invitation";
 
 type Relationship = "mother" | "father" | "guardian"; // labels: Mamá, Papá, Tutor/a
@@ -11,17 +16,52 @@ const relationshipOptions: { value: Relationship; label: string }[] = [
   { value: "guardian", label: "Tutor/a" },
 ];
 
+type FormErrors = {
+  parentName?: string;
+  email?: string;
+  relationship?: string;
+};
+
+function validate(
+  parentName: string,
+  email: string,
+  relationship: "" | Relationship
+): FormErrors {
+  const errors: FormErrors = {};
+  if (!parentName.trim()) errors.parentName = "El nombre es requerido.";
+  if (!email.trim()) {
+    errors.email = "El email es requerido.";
+  } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    errors.email = "Ingresá un email válido.";
+  }
+  if (!relationship) errors.relationship = "Seleccioná un parentesco.";
+  return errors;
+}
+
 export default function LinkParentModal({
   childName,
 }: {
   childName: string;
 }) {
   const [open, setOpen] = useState(false);
+  const [parentName, setParentName] = useState("");
+  const [email, setEmail] = useState("");
   const [relationship, setRelationship] = useState<"" | Relationship>("");
+  const [errors, setErrors] = useState<FormErrors>({});
+  const [touched, setTouched] = useState<Record<string, boolean>>({});
+
+  const resetForm = useCallback(() => {
+    setParentName("");
+    setEmail("");
+    setRelationship("");
+    setErrors({});
+    setTouched({});
+  }, []);
 
   const closeModal = useCallback(() => {
     setOpen(false);
-  }, []);
+    resetForm();
+  }, [resetForm]);
 
   useEffect(() => {
     if (!open) return;
@@ -38,6 +78,28 @@ export default function LinkParentModal({
       document.body.style.overflow = "";
     };
   }, [open ]);
+
+  const handleBlur = (field: string) => {
+    setTouched((prev) => ({ ...prev, [field]: true }));
+    const newErrors = validate(parentName, email, relationship);
+    setErrors(newErrors);
+  };
+
+  const handleSend = () => {
+    setTouched({ parentName: true, email: true, relationship: true });
+    const newErrors = validate(parentName, email, relationship);
+    setErrors(newErrors);
+    if (Object.keys(newErrors).length > 0) return;
+    closeModal();
+  };
+
+  const handleSubmit = (e: FormEvent) => {
+    e.preventDefault();
+    handleSend();
+  };
+
+  const showError = (field: keyof FormErrors) =>
+    touched[field] && errors[field];
 
   return (
     <>
@@ -107,7 +169,7 @@ export default function LinkParentModal({
               </button>
             </div>
 
-            <div className="px-[26px] py-[22px]">
+            <form onSubmit={handleSubmit} className="px-[26px] py-[22px]">
               <div className="flex gap-[11px] bg-[#E3ECFB] rounded-[14px] p-[13px_16px] mb-[20px]">
                 <svg
                   width="20"
@@ -133,34 +195,69 @@ export default function LinkParentModal({
                 NOMBRE DEL PADRE/MADRE
               </div>
               <input
+                value={parentName}
+                onChange={(e) => {
+                  setParentName(e.target.value);
+                  if (errors.parentName)
+                    setErrors({ ...errors, parentName: undefined });
+                }}
+                onBlur={() => handleBlur("parentName")}
                 placeholder="Ej. Diego Fernández"
-                className="w-full py-[13px] px-[16px] rounded-[14px] border-[1.5px] border-[#EADFD0] bg-white text-[15px] text-[#3F362E] mb-[18px] placeholder:text-[#B6A99B]"
+                className={`w-full py-[13px] px-[16px] rounded-[14px] border-[1.5px] bg-white text-[15px] text-[#3F362E] placeholder:text-[#B6A99B] ${showError("parentName") ? "border-[#C5503A] mb-[6px]" : "border-[#EADFD0] mb-[18px]"}`}
               />
+              {showError("parentName") && (
+                <p className="text-[13px] text-[#C5413A] mb-[18px]">
+                  {errors.parentName}
+                </p>
+              )}
 
               <div className="text-[12px] font-[800] tracking-[.7px] text-[#94887B] mb-[8px]">
                 EMAIL
               </div>
               <input
                 type="email"
+                value={email}
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                  if (errors.email)
+                    setErrors({ ...errors, email: undefined });
+                }}
+                onBlur={() => handleBlur("email")}
                 placeholder="correo@ejemplo.com"
-                className="w-full py-[13px] px-[16px] rounded-[14px] border-[1.5px] border-[#EADFD0] bg-white text-[15px] text-[#3F362E] mb-[18px] placeholder:text-[#B6A99B]"
+                className={`w-full py-[13px] px-[16px] rounded-[14px] border-[1.5px] bg-white text-[15px] text-[#3F362E] placeholder:text-[#B6A99B] ${showError("email") ? "border-[#C5503A] mb-[6px]" : "border-[#EADFD0] mb-[18px]"}`}
               />
+              {showError("email") && (
+                <p className="text-[13px] text-[#C5413A] mb-[18px]">
+                  {errors.email}
+                </p>
+              )}
 
               <div className="text-[12px] font-[800] tracking-[.7px] text-[#94887B] mb-[10px]">
                 PARENTESCO
               </div>
-              <div className="flex gap-[9px] mb-[20px]">
+              <div
+                className={`flex gap-[9px] ${showError("relationship") ? "mb-[6px]" : "mb-[20px]"}`}
+              >
                 {relationshipOptions.map((option) => (
                   <button
                     key={option.value}
                     type="button"
-                    onClick={() => setRelationship(option.value)}
+                    onClick={() => {
+                      setRelationship(option.value);
+                      if (errors.relationship)
+                        setErrors({ ...errors, relationship: undefined });
+                    }}
                     className={`flex-1 py-[11px] rounded-full border-[1.5px] font-[800] text-[14px] cursor-pointer ${relationship === option.value ? "border-[#9FB8EC] bg-[#CCD8F4] text-[#4E72C8]" : "border-[#ECE0D0] bg-[#FFFDF9] text-[#6E6359]"}`}
                   >
                     {option.label}
                   </button>
                 ))}
               </div>
+              {showError("relationship") && (
+                <p className="text-[13px] text-[#C5413A] mb-[20px]">
+                  {errors.relationship}
+                </p>
+              )}
 
               <div className="bg-[#FBF1D6] border-[1.5px] border-dashed border-[#E6D08A] rounded-[16px] p-[18px] text-center mb-[20px]">
                 <div className="text-[12px] font-[800] tracking-[.7px] text-[#A88526] mb-[8px]">
@@ -175,7 +272,7 @@ export default function LinkParentModal({
               </div>
 
               <button
-                type="button"
+                type="submit"
                 className="flex items-center justify-center gap-[9px] w-full py-[14px] rounded-[14px] bg-gradient-to-b from-[#F4977E] to-[#EE8164] text-white font-[800] text-[15.5px] shadow-[0_10px_22px_-8px_rgba(238,129,100,.7)] cursor-pointer"
               >
                 <svg
@@ -193,7 +290,7 @@ export default function LinkParentModal({
                 </svg>
                 Enviar invitación
               </button>
-            </div>
+            </form>
           </div>
         </div>
       )}
