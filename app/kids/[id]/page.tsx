@@ -67,12 +67,12 @@ export default async function KidProfilePage({
                     {child.profile.subtitle}
                   </p>
                 </div>
-                <a
+                <Link
                   href="#"
                   className="border border-[#ECE0D0] bg-[#FFFDF9] text-[#6E6359] font-[700] text-[14px] py-[9px] px-4 rounded-[12px]"
                 >
                   Editar
-                </a>
+                </Link>
               </div>
 
               {hasAllergyNotes && (
@@ -147,9 +147,9 @@ export default async function KidProfilePage({
             </div>
 
             <div className="w-[300px] flex-none flex flex-col gap-[14px]">
-              <a
+              <Link
                 href="#"
-                className="flex items-center justify-center gap-[9px] w-full py-[13px] rounded-[14px] bg-[#3F362E] text-white font-[800] text-[15px]"
+                className="flex items-center justify-center gap-[9px] w-full py-[13px] rounded-[14px] bg-[#3F362E] !text-white font-[800] text-[15px]"
               >
                 <svg
                   width="18"
@@ -165,7 +165,7 @@ export default async function KidProfilePage({
                   <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" />
                 </svg>
                 Resumen del día
-              </a>
+              </Link>
 
               <div className="bg-[#FFFDF9] border border-[#ECE0D0] rounded-[16px] p-[16px_18px]">
                 <div className="text-[12.5px] font-[800] tracking-[.8px] text-[#8A7C6D] mb-[14px]">
@@ -202,7 +202,7 @@ export default async function KidProfilePage({
                     </div>
                   ))}
 
-                  <a
+                  <Link
                     href="#"
                     className="flex items-center gap-3 pt-2"
                   >
@@ -223,7 +223,7 @@ export default async function KidProfilePage({
                     <span className="font-[800] text-[14.5px] text-[#C5503A]">
                       Vincular otro padre
                     </span>
-                  </a>
+                    </Link>
                 </div>
               </div>
             </div>

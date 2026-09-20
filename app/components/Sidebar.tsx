@@ -6,8 +6,8 @@ export default function Sidebar({ active }: { active: NavItem }) {
   const navItemClass = (item: NavItem) =>
     `flex items-center gap-3 p-[11px_12px] rounded-[12px] text-[14.5px] ${
       active === item
-        ? "bg-[#FBE3D8] text-[#D9583C] font-[800]"
-        : "bg-transparent text-[#6E6359] font-[600]"
+        ? "bg-[#FBE3D8] !text-[#D9583C] font-[800]"
+        : "bg-transparent !text-[#6E6359] font-[600]"
     }`;
 
   return (
@@ -36,7 +36,7 @@ export default function Sidebar({ active }: { active: NavItem }) {
         </div>
       </Link>
 
-      <a
+      <Link
         href="#"
         className="flex items-center justify-center gap-2 w-full py-3 rounded-[14px] bg-gradient-to-b from-[#F4977E] to-[#EE8164] text-white font-[800] text-[14.5px] shadow-[0_8px_18px_-8px_rgba(238,129,100,.75)] mb-[18px]"
       >
@@ -53,7 +53,7 @@ export default function Sidebar({ active }: { active: NavItem }) {
           <path d="M12 5v14M5 12h14" />
         </svg>
         Nueva publicación
-      </a>
+      </Link>
 
       <nav className="flex flex-col gap-1 flex-1">
         <Link href="/" className={navItemClass("feed")}>
@@ -88,7 +88,7 @@ export default function Sidebar({ active }: { active: NavItem }) {
           </svg>
           Niños
         </Link>
-        <a href="#" className={navItemClass("avisos")}>
+        <Link href="#" className={navItemClass("avisos")}>
           <svg
             width="19"
             height="19"
@@ -102,8 +102,8 @@ export default function Sidebar({ active }: { active: NavItem }) {
             <path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 0 1-3.4 0" />
           </svg>
           Avisos
-        </a>
-        <a href="#" className={navItemClass("cuenta")}>
+        </Link>
+        <Link href="#" className={navItemClass("cuenta")}>
           <svg
             width="19"
             height="19"
@@ -118,7 +118,7 @@ export default function Sidebar({ active }: { active: NavItem }) {
             <circle cx="12" cy="7" r="4" />
           </svg>
           Mi cuenta
-        </a>
+        </Link>
       </nav>
 
       <div className="border-t border-[#ECE0D0] pt-[14px] mt-[10px]">
@@ -132,7 +132,7 @@ export default function Sidebar({ active }: { active: NavItem }) {
             </div>
             <div className="text-[12px] text-[#A89A8B]">Maestra · Soles</div>
           </div>
-          <a
+          <Link
             href="#"
             title="Cerrar sesión"
             className="flex-none w-[32px] h-[32px] rounded-[10px] bg-[#F6ECDF] text-[#94887B] flex items-center justify-center"
@@ -149,7 +149,7 @@ export default function Sidebar({ active }: { active: NavItem }) {
             >
               <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9" />
             </svg>
-          </a>
+          </Link>
         </div>
       </div>
     </aside>

@@ -1,3 +1,4 @@
+import Link from "next/link";
 import type { PostCardProps } from "@/app/data/posts";
 
 export default function PostCard({ post }: PostCardProps) {
@@ -74,7 +75,7 @@ export default function PostCard({ post }: PostCardProps) {
       </p>
 
       {post.photo && (
-        <a
+        <Link
           href="#"
           className="flex flex-col items-center justify-center gap-2 mt-3.5 border-[1.5px] border-dashed border-[#DBCDBA] rounded-[16px] bg-[#F4ECE1] h-[200px] text-[#B0A290]"
         >
@@ -93,7 +94,7 @@ export default function PostCard({ post }: PostCardProps) {
             <path d="m21 15-3.6-3.6a2 2 0 0 0-2.8 0L6 21" />
           </svg>
           <span className="text-[13.5px]">{post.photo.caption}</span>
-        </a>
+        </Link>
       )}
 
       <div className="flex items-center gap-4.5 mt-4 pt-3.5 border-t border-[#F0E6D8]">
@@ -112,7 +113,7 @@ export default function PostCard({ post }: PostCardProps) {
           </svg>
           {post.likes}
         </span>
-        <a
+        <Link
           href="#"
           className="flex items-center gap-1.5 text-[#94887B] font-[700] text-[14px]"
         >
@@ -129,14 +130,14 @@ export default function PostCard({ post }: PostCardProps) {
             <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8z" />
           </svg>
           {post.comments}
-        </a>
+        </Link>
         <span className="flex-1" />
-        <a
+        <Link
           href="#"
           className="text-[#C5503A] font-[800] text-[14px]"
         >
           Editar
-        </a>
+        </Link>
       </div>
     </div>
   );

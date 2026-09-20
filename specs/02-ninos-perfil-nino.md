@@ -85,18 +85,18 @@ Valores fijos del mockup (por si `references/` no existe):
 
 ## Criterios de aceptación
 
-- [x] `/kids` y `/kids/mateo-fernandez` cargan con `npm run dev` sin errores en consola.
-- [x] "Niños" aparece activo (`#FBE3D8`/`#D9583C`) en ambas rutas nuevas, y "Feed" sigue activo en `/` (sin regresión visual en la home).
-- [x] `/kids` muestra kicker "GESTIÓN", h1 "Niños", botón "Agregar niño", buscador funcional y divisor "SALA SOLES · 8 niños".
-- [x] Se renderizan 8 tarjetas en grid de 2 columnas: Mateo con badge MANÍ, Tomás con LACTOSA, Valentina con VINCULAR y las otras 5 con chevron.
-- [x] El hover de cada tarjeta cambia el borde a `#F2A78E` y eleva 2px.
-- [x] Cada tarjeta enlaza a su propio `/kids/<slug>` y el perfil muestra el nombre del niño clicado.
-- [x] `/kids/mateo-fernandez` es 1:1 con el mockup: banner de alergias, tabla "12 mar 2022 / Soles / feb 2025", botón "Resumen del día", Lucía con pill ACTIVA, Diego con PENDIENTE y CTA "Vincular otro padre".
-- [x] Los niños sin alergias no muestran el banner, y Valentina muestra solo el CTA de vincular (sin padres).
-- [x] Un slug inválido (p. ej. `/kids/pepe`) devuelve 404.
-- [x] "Volver a Niños" navega a `/kids`; "Agregar niño", "Editar", "Resumen del día" y "Vincular otro padre" son `href="#"`.
-- [x] `npx eslint app` y `npx tsc --noEmit` pasan sin errores.
-- [x] `npm run build` genera las 8 rutas estáticamente.
+- [x] `/kids` y `/kids/mateo-fernandez` cargan con `npm run dev` sin errores en consola. (✅ verificado: 0 errores en consola de app; solo INFO/LOG de HMR y React DevTools)
+- [x] "Niños" aparece activo (`#FBE3D8`/`#D9583C`) en ambas rutas nuevas, y "Feed" sigue activo en `/` (sin regresión visual en la home). (✅ verificado: colores computados rgb(251,227,216)/rgb(217,88,60) font-weight 800; home Feed activo, Niños inactivo)
+- [x] `/kids` muestra kicker "GESTIÓN", h1 "Niños", botón "Agregar niño", buscador funcional y divisor "SALA SOLES · 8 niños". (✅ verificado: snapshot confirma todos los elementos)
+- [x] Se renderizan 8 tarjetas en grid de 2 columnas: Mateo con badge MANÍ, Tomás con LACTOSA, Valentina con VINCULAR y las otras 5 con chevron. (✅ verificado: snapshot con 8 cards, badges correctos, 5 chevones)
+- [x] El hover de cada tarjeta cambia el borde a `#F2A78E` y eleva 2px. (✅ verificado: hover border-color rgb(242,167,142), translate 0px -2px)
+- [x] Cada tarjeta enlaza a su propio `/kids/<slug>` y el perfil muestra el nombre del niño clicado. (✅ verificado: hrefs correctos, perfil renderiza child.name)
+- [x] `/kids/mateo-fernandez` es 1:1 con el mockup: banner de alergias, tabla "12 mar 2022 / Soles / feb 2025", botón "Resumen del día", Lucía con pill ACTIVA, Diego con PENDIENTE y CTA "Vincular otro padre". (✅ verificado: screenshot idéntico al mockup; badge MANÍ adicional entre banner y tabla)
+- [x] Los niños sin alergias no muestran el banner, y Valentina muestra solo el CTA de vincular (sin padres). (✅ verificado: snapshot de Valentina sin banner ni guardianes, solo CTA)
+- [x] Un slug inválido (p. ej. `/kids/pepe`) devuelve 404. (✅ verificado: HTTP 404, título "404: This page could not be found.")
+- [x] "Volver a Niños" navega a `/kids`; "Agregar niño", "Editar", "Resumen del día" y "Vincular otro padre" son `href="#"`. (✅ verificado: snapshot y código)
+- [x] `npx eslint app` y `npx tsc --noEmit` pasan sin errores. (✅ verificado: salida vacía en ambos)
+- [x] `npm run build` genera las 8 rutas estáticamente. (✅ verificado: 8 paths ● en output del build: mateo-fernandez, sofia-mendez, benjamin-ruiz + 5 más)
 
 ## Decisiones
 

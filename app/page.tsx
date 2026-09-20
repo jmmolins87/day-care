@@ -1,3 +1,4 @@
+import Link from "next/link";
 import Sidebar from "@/app/components/Sidebar";
 import PostCard from "@/app/components/PostCard";
 import { posts } from "@/app/data/posts";
@@ -20,7 +21,7 @@ export default function Home() {
             </p>
           </div>
 
-          <a
+          <Link
             href="#"
             className="flex items-center gap-[14px] bg-[#FFFDF9] border border-[#ECE0D0] rounded-[18px] p-[14px_18px] mb-6 shadow-[0_4px_14px_-10px_rgba(120,90,60,.4)]"
           >
@@ -45,7 +46,7 @@ export default function Home() {
                 <circle cx="12" cy="13" r="4" />
               </svg>
             </span>
-          </a>
+          </Link>
 
           <div className="flex items-center gap-[14px] mb-3.5">
             <span className="text-[12.5px] font-[800] tracking-[.8px] text-[#8A7C6D]">
