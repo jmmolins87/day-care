@@ -8,7 +8,37 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 
 <!-- END:nextjs-agent-rules -->
 
+## Commands
+
+- `npm run dev` — dev server at http://localhost:3000
+- `npm run lint` — runs bare `eslint` over the whole repo. Currently fails: all errors come from `references/pantallas/support.js` (generated design-mockup code, not app code). Lint app code only: `npx eslint app`
+- No test framework or test script exists — don't assume jest/vitest.
+- No typecheck script — `npm run build` runs type checking; `npx tsc --noEmit` also works.
+
+## Stack
+
+- Next.js 16 App Router at `app/` (no `src/`), React 19, strict TypeScript.
+- Tailwind v4, CSS-first: there is no `tailwind.config.*`. Theme tokens are defined in `app/globals.css` via `@import "tailwindcss"` + `@theme inline`; PostCSS plugin is `@tailwindcss/postcss`.
+- Import alias: `@/*` maps to the repo root (e.g. `@/app/...`).
+- Next 16 typed props: pages/layouts use generated global prop types (`PageProps<"/">`, `LayoutProps<"/">`) instead of inline types — see `app/layout.tsx`.
+
+## Project state & design references
+
+- `app/` is still the stock create-next-app template; features are pre-implementation.
+- Product is a daycare app ("guardería"); UI/domain naming is in Spanish.
+- Design source of truth: `references/pantallas/*.dc.html` (HTML mockups: login, feed, niños, avisos, resumen-día, …) and `references/screenshots/*.png`. `references/` and `.playwright-mcp/` are gitignored — local-only, absent on fresh clones. Consult them for UI work, but never reference them from app code.
+
+## Workflow
+
+- Spec-driven: use the `spec` skill to draft a spec before large features, `spec-impl` to implement an approved spec (it creates and switches to its own branch).
+- `CLAUDE.md` only imports this file (`@AGENTS.md`) — make edits here.
 
 ## MCPs
 
 - PLaywright Screenshots y cualquier cosa relacionada a Playwright tiene que estar en la carpeta .playwright-mcp
+- Context7 Usaremos este MCP par traer la documentación actualizada del framework.
+
+## Spec Driven Developments - Skills
+
+- /spec Usaremos esta habilidad para crear las especificaciones.
+- /spec-impl Usaremos esta skill pra hacer las implementaciones.
