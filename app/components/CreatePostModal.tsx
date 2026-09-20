@@ -1,16 +1,50 @@
 "use client";
 
-import { useState, useEffect, useCallback, type FormEvent } from "react";
+import {
+  useState,
+  useEffect,
+  useCallback,
+  useRef,
+  type FormEvent,
+  type DragEvent,
+  type ChangeEvent,
+} from "react";
 import { children } from "@/app/data/children";
 import { postTypes, type PostTypeKey } from "@/app/data/postTypes";
+
+type PhotoPreview = {
+  id: string;
+  url: string | null;
+};
+
+const INITIAL_PHOTOS: PhotoPreview[] = [{ id: "mock", url: null }];
 
 export default function CreatePostModal() {
   const [open, setOpen] = useState(false);
   const [selectedChildSlugs, setSelectedChildSlugs] = useState<string[]>([]);
   const [allClassroom, setAllClassroom] = useState(false);
   const [selectedType, setSelectedType] = useState<"" | PostTypeKey>("");
+  const [photos, setPhotos] = useState<PhotoPreview[]>(INITIAL_PHOTOS);
+  const [isFileDragOver, setIsFileDragOver] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const dragIdRef = useRef<string | null>(null);
 
-  const closeModal = useCallback(() => setOpen(false), []);
+  const resetForm = useCallback(() => {
+    setSelectedChildSlugs([]);
+    setAllClassroom(false);
+    setSelectedType("");
+    setPhotos((prev) => {
+      prev.forEach((photo) => {
+        if (photo.url) URL.revokeObjectURL(photo.url);
+      });
+      return INITIAL_PHOTOS;
+    });
+  }, []);
+
+  const closeModal = useCallback(() => {
+    setOpen(false);
+    resetForm();
+  }, [resetForm]);
 
   const toggleChild = (slug: string) => {
     setSelectedChildSlugs((prev) =>
@@ -22,6 +56,77 @@ export default function CreatePostModal() {
   const toggleAllClassroom = () => {
     setAllClassroom((prev) => !prev);
     setSelectedChildSlugs([]);
+  };
+
+  const addFiles = (files: FileList | File[]) => {
+    const imageFiles = Array.from(files).filter((file) =>
+      file.type.startsWith("image/")
+    );
+    if (imageFiles.length === 0) return;
+    const previews = imageFiles.map((file) => ({
+      id: crypto.randomUUID(),
+      url: URL.createObjectURL(file),
+    }));
+    setPhotos((prev) => [...prev, ...previews]);
+  };
+
+  const removePhoto = (id: string) => {
+    setPhotos((prev) => {
+      const photo = prev.find((p) => p.id === id);
+      if (photo?.url) URL.revokeObjectURL(photo.url);
+      return prev.filter((p) => p.id !== id);
+    });
+  };
+
+  const handleTileDragStart = (id: string, e: DragEvent<HTMLDivElement>) => {
+    dragIdRef.current = id;
+    e.dataTransfer.setData("application/x-photo-tile", id);
+    e.dataTransfer.effectAllowed = "move";
+  };
+
+  const handleTileDragOver = (e: DragEvent<HTMLDivElement>, overId: string) => {
+    const dragId = dragIdRef.current;
+    if (!dragId || dragId === overId) return;
+    e.preventDefault();
+    e.dataTransfer.dropEffect = "move";
+    setPhotos((prev) => {
+      const from = prev.findIndex((p) => p.id === dragId);
+      const to = prev.findIndex((p) => p.id === overId);
+      if (from === -1 || to === -1 || from === to) return prev;
+      const next = [...prev];
+      const [moved] = next.splice(from, 1);
+      next.splice(to, 0, moved);
+      return next;
+    });
+  };
+
+  const handleTileDragEnd = () => {
+    dragIdRef.current = null;
+  };
+
+  const handlePhotosDragOver = (e: DragEvent<HTMLDivElement>) => {
+    if (dragIdRef.current === null && e.dataTransfer.types.includes("Files")) {
+      e.preventDefault();
+      e.dataTransfer.dropEffect = "copy";
+      setIsFileDragOver(true);
+    }
+  };
+
+  const handlePhotosDragLeave = (e: DragEvent<HTMLDivElement>) => {
+    if (e.currentTarget.contains(e.relatedTarget as Node)) return;
+    setIsFileDragOver(false);
+  };
+
+  const handlePhotosDrop = (e: DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    setIsFileDragOver(false);
+    if (dragIdRef.current !== null) return;
+    if (e.dataTransfer.files.length > 0) addFiles(e.dataTransfer.files);
+  };
+
+  const handleFileInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) addFiles(e.target.files);
+    e.target.value = "";
   };
 
   useEffect(() => {
@@ -181,24 +286,71 @@ export default function CreatePostModal() {
               <div className="text-[12px] font-[800] tracking-[.7px] text-[#94887B] mb-[10px]">
                 FOTOS
               </div>
-              <div className="flex flex-wrap gap-[12px]">
-                <div className="w-[96px] h-[96px] rounded-[14px] bg-[#F4ECE1] border border-[#ECE0D0] flex items-center justify-center text-[#CBB89F]">
-                  <svg
-                    width="26"
-                    height="26"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="1.7"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
+              <div
+                className="flex flex-wrap gap-[12px]"
+                onDragOver={handlePhotosDragOver}
+                onDragLeave={handlePhotosDragLeave}
+                onDrop={handlePhotosDrop}
+              >
+                {photos.map((photo) => (
+                  <div
+                    key={photo.id}
+                    draggable
+                    onDragStart={(e) => handleTileDragStart(photo.id, e)}
+                    onDragOver={(e) => handleTileDragOver(e, photo.id)}
+                    onDragEnd={handleTileDragEnd}
+                    className="relative flex-none w-[96px] h-[96px] rounded-[14px] bg-[#F4ECE1] border border-[#ECE0D0] flex items-center justify-center text-[#CBB89F] cursor-grab"
                   >
-                    <rect x="3" y="3" width="18" height="18" rx="2" />
-                    <circle cx="9" cy="9" r="2" />
-                    <path d="m21 15-3.6-3.6a2 2 0 0 0-2.8 0L6 21" />
-                  </svg>
-                </div>
-                <div className="w-[96px] h-[96px] rounded-[14px] border-[1.5px] border-dashed border-[#DBCDBA] bg-[#F4ECE1] flex flex-col items-center justify-center gap-[6px] text-[#B0A290] cursor-pointer">
+                    {photo.url ? (
+                      <img
+                        src={photo.url}
+                        alt=""
+                        className="w-full h-full object-cover rounded-[13px]"
+                      />
+                    ) : (
+                      <svg
+                        width="26"
+                        height="26"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="1.7"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      >
+                        <rect x="3" y="3" width="18" height="18" rx="2" />
+                        <circle cx="9" cy="9" r="2" />
+                        <path d="m21 15-3.6-3.6a2 2 0 0 0-2.8 0L6 21" />
+                      </svg>
+                    )}
+                    <button
+                      type="button"
+                      onClick={() => removePhoto(photo.id)}
+                      aria-label="Quitar foto"
+                      className="absolute -top-[8px] -right-[8px] w-[22px] h-[22px] rounded-full bg-[#3F362E] text-white flex items-center justify-center cursor-pointer"
+                    >
+                      <svg
+                        width="10"
+                        height="10"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="3"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      >
+                        <path d="M18 6 6 18M6 6l12 12" />
+                      </svg>
+                    </button>
+                  </div>
+                ))}
+                <button
+                  type="button"
+                  onClick={() => fileInputRef.current?.click()}
+                  className={`flex-none w-[96px] h-[96px] rounded-[14px] border-[1.5px] border-dashed bg-[#F4ECE1] flex flex-col items-center justify-center gap-[6px] text-[#B0A290] cursor-pointer ${
+                    isFileDragOver ? "border-[#C5503A]" : "border-[#DBCDBA]"
+                  }`}
+                >
                   <svg
                     width="22"
                     height="22"
@@ -212,7 +364,15 @@ export default function CreatePostModal() {
                     <path d="M12 5v14M5 12h14" />
                   </svg>
                   <span className="text-[12px]">Agregar</span>
-                </div>
+                </button>
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  accept="image/*"
+                  multiple
+                  className="hidden"
+                  onChange={handleFileInputChange}
+                />
               </div>
             </form>
           </div>
