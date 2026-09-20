@@ -49,6 +49,7 @@ export default function LinkParentModal({
   const [relationship, setRelationship] = useState<"" | Relationship>("");
   const [errors, setErrors] = useState<FormErrors>({});
   const [touched, setTouched] = useState<Record<string, boolean>>({});
+  const firstName = childName.split(" ")[0];
 
   const resetForm = useCallback(() => {
     setParentName("");
@@ -187,7 +188,7 @@ export default function LinkParentModal({
                 </svg>
                 <span className="text-[13.5px] text-[#3F5694] leading-[1.45]">
                   Le enviaremos un correo con un código para que active su
-                  cuenta. Solo verá el feed de {childName}.
+                  cuenta. Solo verá el feed de {firstName}.
                 </span>
               </div>
 
