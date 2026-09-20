@@ -70,16 +70,16 @@ El formulario no produce ni persiste un objeto `Child`: Guardar valida y cierra.
 
 ## Criterios de aceptación
 
-- [ ] El botón "Agregar niño" de `/kids` abre la modal y muestra icono con stroke `#C5503A` y texto blanco sobre el gradiente `#F4977E→#EE8164`.
-- [ ] La modal es 1:1 con el mockup: tarjeta `#FBF4EC` de 520px con borde `#ECE0D0`, header Cancelar/título/Guardar, labels uppercase 12px `#94887B`, inputs blancos radio 14px con borde `#EADFD0` y placeholders "Ej. Martina López", "dd/mm/aaaa", "Ej. Maní, Lactosa", "Indicaciones, medicación, contactos…".
-- [ ] La modal se cierra con Cancelar, Escape y click en el fondo, y no se cierra al hacer click dentro de la tarjeta.
-- [ ] El select SALA lista las 4 salas del mock con chevron como el del mockup y "Soles" preseleccionada al abrir.
-- [ ] Escribir `20102022` en la fecha produce `20/10/2022`; no acepta letras ni más de 10 caracteres.
-- [ ] Guardar con nombre vacío, o fecha vacía/inválida (`32/13/2026`, `01/01/2030`), muestra el error inline bajo el campo y no cierra la modal.
-- [ ] Alergias y notas médicas vacías no bloquean el guardado.
-- [ ] Corregir los campos con error y reenviar pasa la validación y cierra la modal (sin persistencia ni cambios en la lista).
-- [ ] `/kids` sigue mostrando las 8 tarjetas, el buscador y el divisor "SALA SOLES · 8 niños" sin regresiones (SPEC 02).
-- [ ] `npx eslint app`, `npx tsc --noEmit` y `npm run build` pasan sin errores.
+- [x] El botón "Agregar niño" de `/kids` abre la modal y muestra icono con stroke `#C5503A` y texto blanco sobre el gradiente `#F4977E→#EE8164`.
+- [x] La modal es 1:1 con el mockup: tarjeta `#FBF4EC` de 520px con borde `#ECE0D0`, header Cancelar/título/Guardar, labels uppercase 12px `#94887B`, inputs blancos radio 14px con borde `#EADFD0` y placeholders "Ej. Martina López", "dd/mm/aaaa", "Ej. Maní, Lactosa", "Indicaciones, medicación, contactos…".
+- [x] La modal se cierra con Cancelar, Escape y click en el fondo, y no se cierra al hacer click dentro de la tarjeta.
+- [x] El select SALA lista las 4 salas del mock con chevron como el del mockup y "Soles" preseleccionada al abrir.
+- [x] Escribir `20102022` en la fecha produce `20/10/2022`; no acepta letras ni más de 10 caracteres.
+- [x] Guardar con nombre vacío, o fecha vacía/inválida (`32/13/2026`, `01/01/2030`), muestra el error inline bajo el campo y no cierra la modal.
+- [x] Alergias y notas médicas vacías no bloquean el guardado.
+- [x] Corregir los campos con error y reenviar pasa la validación y cierra la modal (sin persistencia ni cambios en la lista).
+- [x] `/kids` sigue mostrando las 8 tarjetas, el buscador y el divisor "SALA SOLES · 8 niños" sin regresiones (SPEC 02).
+- [x] `npx eslint app`, `npx tsc --noEmit` y `npm run build` pasan sin errores.
 
 ## Decisiones
 

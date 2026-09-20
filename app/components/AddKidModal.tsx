@@ -1,7 +1,13 @@
 "use client";
 
-import { useState, useEffect, useRef, type FormEvent } from "react";
-import { classrooms } from "@/app/data/classrooms";
+import {
+  useState,
+  useEffect,
+  useRef,
+  useCallback,
+  type FormEvent,
+} from "react";
+import { classrooms, defaultClassroomId } from "@/app/data/classrooms";
 
 type FormErrors = {
   name?: string;
@@ -48,27 +54,27 @@ export default function AddKidModal() {
   const [open, setOpen] = useState(false);
   const [name, setName] = useState("");
   const [birthDate, setBirthDate] = useState("");
-  const [classroomId, setClassroomId] = useState("");
+  const [classroomId, setClassroomId] = useState(defaultClassroomId);
   const [allergies, setAllergies] = useState("");
   const [medicalNotes, setMedicalNotes] = useState("");
   const [errors, setErrors] = useState<FormErrors>({});
   const [touched, setTouched] = useState<Record<string, boolean>>({});
   const cardRef = useRef<HTMLDivElement>(null);
 
-  const resetForm = () => {
+  const resetForm = useCallback(() => {
     setName("");
     setBirthDate("");
-    setClassroomId("");
+    setClassroomId(defaultClassroomId);
     setAllergies("");
     setMedicalNotes("");
     setErrors({});
     setTouched({});
-  };
+  }, []);
 
-  const closeModal = () => {
+  const closeModal = useCallback(() => {
     setOpen(false);
     resetForm();
-  };
+  }, [resetForm]);
 
   useEffect(() => {
     if (!open) return;
@@ -77,7 +83,7 @@ export default function AddKidModal() {
     };
     document.addEventListener("keydown", handler);
     return () => document.removeEventListener("keydown", handler);
-  }, [open]);
+  }, [open, closeModal]);
 
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
@@ -219,9 +225,6 @@ export default function AddKidModal() {
                       onBlur={() => handleBlur("classroom")}
                       className={`w-full py-[13px] px-[16px] pr-[40px] rounded-[14px] border-[1.5px] bg-white text-[15px] appearance-none ${showError("classroom") ? "border-[#C5503A]" : "border-[#EADFD0]"} ${classroomId ? "text-[#3F362E] font-[700]" : "text-[#B6A99B]"}`}
                     >
-                      <option value="" disabled>
-                        Seleccionar sala
-                      </option>
                       {classrooms.map((c) => (
                         <option key={c.id} value={c.id}>
                           {c.name}
