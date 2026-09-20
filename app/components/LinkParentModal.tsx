@@ -170,7 +170,7 @@ export default function LinkParentModal({
               </button>
             </div>
 
-            <form onSubmit={handleSubmit} className="px-[26px] py-[22px]">
+            <form noValidate onSubmit={handleSubmit} className="px-[26px] py-[22px]">
               <div className="flex gap-[11px] bg-[#E3ECFB] rounded-[14px] p-[13px_16px] mb-[20px]">
                 <svg
                   width="20"

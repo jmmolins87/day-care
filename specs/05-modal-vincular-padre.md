@@ -1,6 +1,6 @@
 # SPEC 05 — Modal "Vincular padre" en `/kids/[id]` (mockup `vincular-padre.dc.html`)
 
-> **Estado:** Aprobado
+> **Estado:** Implementado
 > **Depende de:** SPEC 02, SPEC 03, SPEC 04
 > **Fecha:** 2026-09-20
 > **Objetivo:** Implementar la vinculación de padre como modal que se abre con el CTA "Vincular otro padre" de `/kids/[id]`, 1:1 con `vincular-padre.dc.html`, con código de invitación estático "7K4P9" y validación solo en frontend, sin persistencia ni cambios en la lista de tutores.
@@ -59,15 +59,15 @@ El formulario no produce ni persiste un objeto `Guardian`: Enviar valida y cierr
 
 ## Criterios de aceptación
 
-- [ ] El CTA "Vincular otro padre" de `/kids/mateo-fernandez` abre la modal conservando su visual actual (círculo dashed, icono +, texto `#C5503A`).
-- [ ] La modal es 1:1 con el mockup: tarjeta 480px `#FBF4EC` con borde `#ECE0D0`, header con título y subtítulo "a Mateo Fernández", banner azul con "…Solo verá el feed de Mateo.", inputs con sus placeholders, 3 pills, caja de código dashed con "7K4P9" y "Vence en 7 días", y CTA gradiente "Enviar invitación".
-- [ ] La modal se cierra con X, Escape y click en el fondo, y no se cierra al hacer click dentro de la tarjeta.
-- [ ] Las 3 pills de PARENTESCO inician sin selección; al clicar una toma el estilo seleccionado (`#CCD8F4`/`#4E72C8`/borde `#9FB8EC`) y se desmarca la anterior.
-- [ ] Enviar con nombre vacío, email vacío o mal formado, o sin parentesco, muestra el error inline bajo el campo y no cierra la modal.
-- [ ] Un submit válido cierra la modal sin persistir nada ni añadir el tutor a la lista del perfil.
-- [ ] En otro niño (p. ej. Valentina), subtítulo y banner usan su nombre ("a Valentina" / "Solo verá el feed de Valentina.").
-- [ ] El perfil no sufre regresiones: banner de alergias, tabla, Lucía ACTIVA y Diego PENDIENTE en el de Mateo (SPEC 02).
-- [ ] `npx eslint app`, `npx tsc --noEmit` y `npm run build` pasan sin errores.
+- [x] El CTA "Vincular otro padre" de `/kids/mateo-fernandez` abre la modal conservando su visual actual (círculo dashed, icono +, texto `#C5503A`). (✅ verificado en Playwright: botón con círculo 40px dashed 1.5px `#D8CBBA`, icono `#B0A290` y texto `#C5503A` 800 14.5px; screenshots `05-perfil-mateo-antes/post.png`)
+- [x] La modal es 1:1 con el mockup: tarjeta 480px `#FBF4EC` con borde `#ECE0D0`, header con título y subtítulo "a Mateo Fernández", banner azul con "…Solo verá el feed de Mateo.", inputs con sus placeholders, 3 pills, caja de código dashed con "7K4P9" y "Vence en 7 días", y CTA gradiente "Enviar invitación". (✅ verificado: tokens de color/tipografía/padding/radio/sombra exactos (40 aserciones) y espaciados idénticos al mockup (22/8/18/10/20/20px); el diff píxel solo difiere en la banda de pills (desviación documentada: sin preselección) y en ~35px de altura por el line-height base 1.5 de Tailwind vs `normal` del mockup — mismo matiz ya aprobado en SPEC 04 (AddKidModal +21.5px) y común a toda la app; screenshots `05-modal-mateo-card.png` vs `05-mockup-vincular-padre.png`)
+- [x] La modal se cierra con X, Escape y click en el fondo, y no se cierra al hacer click dentro de la tarjeta. (✅ verificado en Playwright: X, Escape y fondo cierran; click en el título no cierra)
+- [x] Las 3 pills de PARENTESCO inician sin selección; al clicar una toma el estilo seleccionado (`#CCD8F4`/`#4E72C8`/borde `#9FB8EC`) y se desmarca la anterior. (✅ verificado: inicio `#FFFDF9`/`#6E6359`/`#ECE0D0` en las 3; clic en Mamá la marca, clic en Papá desmarca Mamá y marca Papá)
+- [x] Enviar con nombre vacío, email vacío o mal formado, o sin parentesco, muestra el error inline bajo el campo y no cierra la modal. (✅ verificado: 3 errores inline con borde `#C5503A` y texto `#C5413A` (parentesco solo texto bajo la fila); email "diego@ejemplo" → "Ingresá un email válido." sin cerrar. Fix del verificador: añadido `noValidate` al form — como en LoginForm/ActivateForm (SPEC 03) — para que el email mal formado muestre el error inline y no el bubble nativo del navegador)
+- [x] Un submit válido cierra la modal sin persistir nada ni añadir el tutor a la lista del perfil. (✅ verificado: submit válido cierra; PADRES VINCULADOS sigue mostrando solo Lucía y Diego)
+- [x] En otro niño (p. ej. Valentina), subtítulo y banner usan su nombre ("a Valentina" / "Solo verá el feed de Valentina."). (✅ verificado: subtítulo "a Valentina Soto" y banner "…Solo verá el feed de Valentina."; screenshot `05-modal-valentina.png`)
+- [x] El perfil no sufre regresiones: banner de alergias, tabla, Lucía ACTIVA y Diego PENDIENTE en el de Mateo (SPEC 02). (✅ verificado: banner "Alergias y notas", tabla 12 mar 2022 / Soles / feb 2025, Lucía ACTIVA, Diego PENDIENTE, badge MANÍ y botón "Resumen del día" intactos)
+- [x] `npx eslint app`, `npx tsc --noEmit` y `npm run build` pasan sin errores. (✅ verificado: los tres pasan; `tsc` requiere `npx next typegen` previo porque `LayoutProps`/`PageProps` son tipos generados)
 
 ## Decisiones
 
