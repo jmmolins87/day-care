@@ -85,7 +85,7 @@ export default function ActivateForm() {
         </div>
       </div>
 
-      <form onSubmit={handleSubmit}>
+      <form noValidate onSubmit={handleSubmit}>
         <div className="text-[12px] font-[700] tracking-[0.7px] text-[#94887B] mb-2">
           CÓDIGO DE INVITACIÓN
         </div>
@@ -173,7 +173,7 @@ export default function ActivateForm() {
 
       <p className="text-center mt-[22px] text-[#94887B] text-[14.5px]">
         ¿Ya tenés cuenta?{" "}
-        <Link href="/login" className="text-[#C5503A] font-[800]">
+        <Link href="/login" className="!text-[#C5503A] font-[800]">
           Iniciar sesión
         </Link>
       </p>

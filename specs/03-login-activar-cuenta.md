@@ -57,15 +57,15 @@ El login no introduce datos nuevos: el email demo (`caro@opendaycare.com`) vive 
 
 ## Criterios de aceptación
 
-- [ ] `/login` y `/activate` cargan con `npm run dev` sin errores en consola.
-- [ ] `/login` no renderiza el selector "INGRESO COMO" ni los botones Personal/Familia.
-- [ ] `/login` es 1:1 con el mockup: panel izquierdo con gradiente y copy, campos EMAIL/CONTRASEÑA, "¿Olvidaste tu contraseña?" y CTA "Iniciar sesión".
-- [ ] Un submit inválido (email vacío o mal formado, contraseña vacía, checkbox desmarcado) muestra error inline y no navega.
-- [ ] Un submit válido en ambos formularios navega a `/`.
-- [ ] "Activá tu cuenta" en `/login` enlaza a `/activate`, y "Iniciar sesión" en `/activate` enlaza a `/login`.
-- [ ] `/activate` es 1:1 con el mockup: tarjeta "Te invitaron a seguir a / Mateo · Sala Soles", código "7K4P9", email de Lucía y checkbox de autorización.
-- [ ] El botón "Cerrar sesión" del Sidebar navega a `/login`.
-- [ ] `npx eslint app`, `npx tsc --noEmit` y `npm run build` pasan sin errores.
+- [x] `/login` y `/activate` cargan con `npm run dev` sin errores en consola. (✅ verificado: 0 errores de consola en ambas rutas, title "OpenDayCare")
+- [x] `/login` no renderiza el selector "INGRESO COMO" ni los botones Personal/Familia. (✅ verificado: grep sin matches en `app/login` y `app/components`; snapshot de Playwright sin esos nodos)
+- [x] `/login` es 1:1 con el mockup: panel izquierdo con gradiente y copy, campos EMAIL/CONTRASEÑA, "¿Olvidaste tu contraseña?" y CTA "Iniciar sesión". (✅ verificado: screenshot vs `login.dc.html` — layout, gradiente, copy y campos idénticos salvo el selector eliminado por decisión; corregido color de enlaces a `#C5503A`)
+- [x] Un submit inválido (email vacío o mal formado, contraseña vacía, checkbox desmarcado) muestra error inline y no navega. (✅ verificado: login con "no-es-un-email" + password vacía muestra "Ingresá un email válido." y "La contraseña es requerida." sin navegar; activate con "email-roto" muestra error inline y con consent desmarcado muestra "Debés autorizar para continuar.", sin navegar)
+- [x] Un submit válido en ambos formularios navega a `/`. (✅ verificado: click en "Iniciar sesión" y en "Activar mi cuenta" con datos válidos lleva a `http://localhost:3000/`)
+- [x] "Activá tu cuenta" en `/login` enlaza a `/activate`, y "Iniciar sesión" en `/activate` enlaza a `/login`. (✅ verificado: snapshot muestra `/url: /activate` y `/url: /login` respectivamente)
+- [x] `/activate` es 1:1 con el mockup: tarjeta "Te invitaron a seguir a / Mateo · Sala Soles", código "7K4P9", email de Lucía y checkbox de autorización. (✅ verificado: screenshot vs `activar-cuenta.dc.html` — logo, tarjeta de invitación, campos precargados, consent marcado en verde y CTA idénticos)
+- [x] El botón "Cerrar sesión" del Sidebar navega a `/login`. (✅ verificado: snapshot muestra `/url: /login`; click navega a `http://localhost:3000/login`)
+- [x] `npx eslint app`, `npx tsc --noEmit` y `npm run build` pasan sin errores. (✅ verificado: eslint y tsc con salida vacía; build genera `/login` y `/activate` como rutas estáticas)
 
 ## Decisiones
 

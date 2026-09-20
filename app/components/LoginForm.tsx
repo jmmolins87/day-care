@@ -40,7 +40,7 @@ export default function LoginForm() {
         Ingresá para ver el día de hoy.
       </p>
 
-      <form onSubmit={handleSubmit}>
+      <form noValidate onSubmit={handleSubmit}>
         <div className="text-[12px] font-[700] tracking-[0.7px] text-[#94887B] mb-2">
           EMAIL
         </div>
@@ -73,7 +73,7 @@ export default function LoginForm() {
         )}
 
         <div className="text-right mb-[20px]">
-          <Link href="#" className="text-[#C5503A] text-[13.5px] font-[700]">
+          <Link href="#" className="!text-[#C5503A] text-[13.5px] font-[700]">
             ¿Olvidaste tu contraseña?
           </Link>
         </div>
@@ -88,7 +88,7 @@ export default function LoginForm() {
 
       <p className="text-center mt-[24px] text-[#94887B] text-[14.5px]">
         ¿Te invitó la guardería?{" "}
-        <Link href="/activate" className="text-[#C5503A] font-[800]">
+        <Link href="/activate" className="!text-[#C5503A] font-[800]">
           Activá tu cuenta
         </Link>
       </p>
