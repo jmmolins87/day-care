@@ -5,7 +5,7 @@ import { posts } from "@/app/data/posts";
 export default function Home() {
   return (
     <div className="flex">
-      <Sidebar />
+      <Sidebar active="feed" />
       <main className="flex-1 min-w-0 h-screen overflow-y-auto">
         <div className="max-w-[760px] w-full mx-auto pt-[34px] px-[40px] pb-[80px]">
           <div className="mb-6">

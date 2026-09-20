@@ -1,6 +1,15 @@
 import Link from "next/link";
 
-export default function Sidebar() {
+type NavItem = "feed" | "ninos" | "avisos" | "cuenta";
+
+export default function Sidebar({ active }: { active: NavItem }) {
+  const navItemClass = (item: NavItem) =>
+    `flex items-center gap-3 p-[11px_12px] rounded-[12px] text-[14.5px] ${
+      active === item
+        ? "bg-[#FBE3D8] text-[#D9583C] font-[800]"
+        : "bg-transparent text-[#6E6359] font-[600]"
+    }`;
+
   return (
     <aside className="w-[248px] flex-none bg-[#FFFDF9] border-r border-[#ECE0D0] flex flex-col p-6 px-4 sticky top-0 h-screen">
       <Link href="/" className="flex items-center gap-[11px] pb-[22px]">
@@ -47,10 +56,7 @@ export default function Sidebar() {
       </a>
 
       <nav className="flex flex-col gap-1 flex-1">
-        <Link
-          href="/"
-          className="flex items-center gap-3 p-[11px_12px] rounded-[12px] bg-[#FBE3D8] text-[#D9583C] font-[800] text-[14.5px]"
-        >
+        <Link href="/" className={navItemClass("feed")}>
           <svg
             width="19"
             height="19"
@@ -65,10 +71,7 @@ export default function Sidebar() {
           </svg>
           Feed
         </Link>
-        <a
-          href="#"
-          className="flex items-center gap-3 p-[11px_12px] rounded-[12px] bg-transparent text-[#6E6359] font-[600] text-[14.5px]"
-        >
+        <Link href="/ninos" className={navItemClass("ninos")}>
           <svg
             width="19"
             height="19"
@@ -84,11 +87,8 @@ export default function Sidebar() {
             <path d="M2.5 20a6.5 6.5 0 0 1 13 0M16 20a5 5 0 0 1 5.5-4.9" />
           </svg>
           Niños
-        </a>
-        <a
-          href="#"
-          className="flex items-center gap-3 p-[11px_12px] rounded-[12px] bg-transparent text-[#6E6359] font-[600] text-[14.5px]"
-        >
+        </Link>
+        <a href="#" className={navItemClass("avisos")}>
           <svg
             width="19"
             height="19"
@@ -103,10 +103,7 @@ export default function Sidebar() {
           </svg>
           Avisos
         </a>
-        <a
-          href="#"
-          className="flex items-center gap-3 p-[11px_12px] rounded-[12px] bg-transparent text-[#6E6359] font-[600] text-[14.5px]"
-        >
+        <a href="#" className={navItemClass("cuenta")}>
           <svg
             width="19"
             height="19"
