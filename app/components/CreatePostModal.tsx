@@ -6,8 +6,22 @@ import { postTypes } from "@/app/data/postTypes";
 
 export default function CreatePostModal() {
   const [open, setOpen] = useState(false);
+  const [selectedChildSlugs, setSelectedChildSlugs] = useState<string[]>([]);
+  const [allClassroom, setAllClassroom] = useState(false);
 
   const closeModal = useCallback(() => setOpen(false), []);
+
+  const toggleChild = (slug: string) => {
+    setSelectedChildSlugs((prev) =>
+      prev.includes(slug) ? prev.filter((s) => s !== slug) : [...prev, slug]
+    );
+    setAllClassroom(false);
+  };
+
+  const toggleAllClassroom = () => {
+    setAllClassroom((prev) => !prev);
+    setSelectedChildSlugs([]);
+  };
 
   useEffect(() => {
     if (!open) return;
@@ -92,27 +106,40 @@ export default function CreatePostModal() {
                 PARA
               </div>
               <div className="flex flex-wrap gap-[9px] mb-[22px]">
-                {children.map((child) => (
-                  <button
-                    key={child.slug}
-                    type="button"
-                    className="flex items-center gap-[8px] py-[6px] pr-[14px] pl-[6px] rounded-full border-[1.5px] border-[#ECE0D0] bg-[#FFFDF9] text-[#6E6359] font-[700] text-[14px] cursor-pointer"
-                  >
-                    <span
-                      className="w-[26px] h-[26px] rounded-full flex items-center justify-center font-['Fredoka'] font-[600] text-[13px]"
-                      style={{
-                        backgroundColor: child.avatar.bg,
-                        color: child.avatar.color,
-                      }}
+                {children.map((child) => {
+                  const selected = selectedChildSlugs.includes(child.slug);
+                  return (
+                    <button
+                      key={child.slug}
+                      type="button"
+                      onClick={() => toggleChild(child.slug)}
+                      className={`flex items-center gap-[8px] py-[6px] pr-[14px] pl-[6px] rounded-full border-[1.5px] font-[700] text-[14px] cursor-pointer ${
+                        selected
+                          ? "border-[#3F362E] bg-[#3F362E] text-white"
+                          : "border-[#ECE0D0] bg-[#FFFDF9] text-[#6E6359]"
+                      }`}
                     >
-                      {child.initial}
-                    </span>
-                    {child.name.split(" ")[0]}
-                  </button>
-                ))}
+                      <span
+                        className="w-[26px] h-[26px] rounded-full flex items-center justify-center font-['Fredoka'] font-[600] text-[13px]"
+                        style={{
+                          backgroundColor: child.avatar.bg,
+                          color: child.avatar.color,
+                        }}
+                      >
+                        {child.initial}
+                      </span>
+                      {child.name.split(" ")[0]}
+                    </button>
+                  );
+                })}
                 <button
                   type="button"
-                  className="py-[6px] px-[16px] rounded-full border-[1.5px] border-[#ECE0D0] bg-[#FFFDF9] text-[#6E6359] font-[700] text-[14px] cursor-pointer"
+                  onClick={toggleAllClassroom}
+                  className={`py-[6px] px-[16px] rounded-full border-[1.5px] font-[700] text-[14px] cursor-pointer ${
+                    allClassroom
+                      ? "border-[#3F362E] bg-[#3F362E] text-white"
+                      : "border-[#ECE0D0] bg-[#FFFDF9] text-[#6E6359]"
+                  }`}
                 >
                   Toda la sala
                 </button>
