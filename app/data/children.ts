@@ -1,3 +1,6 @@
+import type { AllergyKey } from "@/app/data/allergies";
+import { allergies } from "@/app/data/allergies";
+
 export type GuardianStatus = "active" | "pending";
 
 export type Guardian = {
@@ -15,11 +18,11 @@ export type Child = {
   name: string;
   ageLabel: string;
   parentSummary: string;
-  badge?: ChildBadge;
+  allergies: AllergyKey[];
   avatar: { bg: string; color: string };
   profile: {
     subtitle: string;
-    allergies?: { text: string };
+    allergyNotes?: string;
     birthDate: string;
     classroom: string;
     enrollment: string;
@@ -32,6 +35,17 @@ export const guardianStatusLabel: Record<GuardianStatus, string> = {
   pending: "PENDIENTE",
 };
 
+export function getChildBadge(child: Child): ChildBadge | undefined {
+  if (child.allergies.length > 0) {
+    const def = allergies[child.allergies[0]];
+    return { label: def.label, bg: def.bg, color: def.color };
+  }
+  if (child.profile.guardians.length === 0) {
+    return { label: "VINCULAR", bg: "#F9D2DE", color: "#C56486" };
+  }
+  return undefined;
+}
+
 export const children: Child[] = [
   {
     slug: "mateo-fernandez",
@@ -39,13 +53,12 @@ export const children: Child[] = [
     name: "Mateo Fernández",
     ageLabel: "3 años",
     parentSummary: "2 padres vinculados",
-    badge: { label: "MANÍ", bg: "#FBD8CC", color: "#D9684A" },
+    allergies: ["mani"],
     avatar: { bg: "#A9D9E8", color: "#1F7A93" },
     profile: {
       subtitle: "3 años · Sala Soles",
-      allergies: {
-        text: "Alergia al maní. Evitar frutos secos. Lleva inhalador en la mochila.",
-      },
+      allergyNotes:
+        "Alergia al maní. Evitar frutos secos. Lleva inhalador en la mochila.",
       birthDate: "12 mar 2022",
       classroom: "Soles",
       enrollment: "feb 2025",
@@ -71,6 +84,7 @@ export const children: Child[] = [
     name: "Sofía Méndez",
     ageLabel: "2 años",
     parentSummary: "1 padre vinculado",
+    allergies: [],
     avatar: { bg: "#F4B8CC", color: "#C44A7A" },
     profile: {
       subtitle: "2 años · Sala Soles",
@@ -93,6 +107,7 @@ export const children: Child[] = [
     name: "Benjamín Ruiz",
     ageLabel: "3 años",
     parentSummary: "2 padres vinculados",
+    allergies: [],
     avatar: { bg: "#B9DEC4", color: "#3E8B62" },
     profile: {
       subtitle: "3 años · Sala Soles",
@@ -121,7 +136,7 @@ export const children: Child[] = [
     name: "Valentina Soto",
     ageLabel: "2 años",
     parentSummary: "sin padres vinculados",
-    badge: { label: "VINCULAR", bg: "#F9D2DE", color: "#C56486" },
+    allergies: [],
     avatar: { bg: "#F4DC8E", color: "#9A7B1E" },
     profile: {
       subtitle: "2 años · Sala Soles",
@@ -137,7 +152,7 @@ export const children: Child[] = [
     name: "Tomás Díaz",
     ageLabel: "3 años",
     parentSummary: "1 padre vinculado",
-    badge: { label: "LACTOSA", bg: "#FBD8CC", color: "#D9684A" },
+    allergies: ["lactosa"],
     avatar: { bg: "#C9B6E8", color: "#7B5FC0" },
     profile: {
       subtitle: "3 años · Sala Soles",
@@ -160,6 +175,7 @@ export const children: Child[] = [
     name: "Emma Castro",
     ageLabel: "2 años",
     parentSummary: "1 padre vinculado",
+    allergies: [],
     avatar: { bg: "#F4B8CC", color: "#C44A7A" },
     profile: {
       subtitle: "2 años · Sala Soles",
@@ -182,6 +198,7 @@ export const children: Child[] = [
     name: "Lucas Romero",
     ageLabel: "3 años",
     parentSummary: "1 padre vinculado",
+    allergies: [],
     avatar: { bg: "#A9D9E8", color: "#1F7A93" },
     profile: {
       subtitle: "3 años · Sala Soles",
@@ -204,6 +221,7 @@ export const children: Child[] = [
     name: "Olivia Vega",
     ageLabel: "2 años",
     parentSummary: "1 padre vinculado",
+    allergies: [],
     avatar: { bg: "#B9DEC4", color: "#3E8B62" },
     profile: {
       subtitle: "2 años · Sala Soles",

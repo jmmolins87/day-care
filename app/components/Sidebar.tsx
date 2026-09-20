@@ -71,7 +71,7 @@ export default function Sidebar({ active }: { active: NavItem }) {
           </svg>
           Feed
         </Link>
-        <Link href="/ninos" className={navItemClass("ninos")}>
+        <Link href="/kids" className={navItemClass("ninos")}>
           <svg
             width="19"
             height="19"

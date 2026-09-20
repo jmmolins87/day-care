@@ -1,10 +1,13 @@
 import Link from "next/link";
 import type { Child } from "@/app/data/children";
+import { getChildBadge } from "@/app/data/children";
 
 export default function KidCard({ child }: { child: Child }) {
+  const badge = getChildBadge(child);
+
   return (
     <Link
-      href={`/ninos/${child.slug}`}
+      href={`/kids/${child.slug}`}
       className="flex items-center gap-[14px] min-w-0 bg-[#FFFDF9] border border-[#ECE0D0] rounded-[18px] p-4 shadow-[0_4px_14px_-12px_rgba(120,90,60,.5)] hover:border-[#F2A78E] hover:-translate-y-[2px] transition"
     >
       <div
@@ -21,12 +24,12 @@ export default function KidCard({ child }: { child: Child }) {
           {child.ageLabel} · {child.parentSummary}
         </div>
       </div>
-      {child.badge ? (
+      {badge ? (
         <span
           className="flex-none text-[11px] font-[800] py-[5px] px-[9px] rounded-full"
-          style={{ background: child.badge.bg, color: child.badge.color }}
+          style={{ background: badge.bg, color: badge.color }}
         >
-          {child.badge.label}
+          {badge.label}
         </span>
       ) : (
         <svg
