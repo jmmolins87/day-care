@@ -1,6 +1,6 @@
 # SPEC 04 — Modal "Agregar niño" en `/kids` (mockup `agregar-nino.dc.html`)
 
-> **Estado:** Aprobado
+> **Estado:** Implementado
 > **Depende de:** SPEC 02
 > **Fecha:** 2026-09-20
 > **Objetivo:** Implementar el alta de niño como modal que se abre con el botón "Agregar niño" de `/kids` (icono coral y texto blanco), con mock de salas, máscara `dd/mm/aaaa` para la fecha de nacimiento y validación solo en frontend, sin persistencia.
