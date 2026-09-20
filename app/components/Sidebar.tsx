@@ -1,4 +1,5 @@
 import Link from "next/link";
+import CreatePostModal from "@/app/components/CreatePostModal";
 
 type NavItem = "feed" | "ninos" | "avisos" | "cuenta";
 
@@ -36,24 +37,7 @@ export default function Sidebar({ active }: { active: NavItem }) {
         </div>
       </Link>
 
-      <Link
-        href="#"
-        className="flex items-center justify-center gap-2 w-full py-3 rounded-[14px] bg-gradient-to-b from-[#F4977E] to-[#EE8164] text-white font-[800] text-[14.5px] shadow-[0_8px_18px_-8px_rgba(238,129,100,.75)] mb-[18px]"
-      >
-        <svg
-          width="17"
-          height="17"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="#fff"
-          strokeWidth="2.4"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <path d="M12 5v14M5 12h14" />
-        </svg>
-        Nueva publicación
-      </Link>
+      <CreatePostModal />
 
       <nav className="flex flex-col gap-1 flex-1">
         <Link href="/" className={navItemClass("feed")}>
