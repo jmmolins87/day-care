@@ -1,6 +1,6 @@
 # SPEC 06 — Modal "Nueva publicación" desde el sidebar del feed (mockup `crear-publicacion.dc.html`)
 
-> **Estado:** Aprobado
+> **Estado:** Implementado
 > **Depende de:** SPEC 01, SPEC 02
 > **Fecha:** 2026-09-20
 > **Objetivo:** Implementar la creación de publicación como modal que abre el botón "Nueva publicación" del Sidebar, 1:1 con `crear-publicacion.dc.html`, con selección múltiple de niños (excluyente con "Toda la sala"), tipo de selección única y drag & drop de fotos con previews locales, todo con mocks y sin persistencia.
@@ -89,20 +89,20 @@ El formulario no produce ni persiste un `Post`: Publicar valida y cierra. Reutil
 
 ## Criterios de aceptación
 
-- [ ] El botón "Nueva publicación" del sidebar conserva el gradiente `#F4977E→#EE8164` y abre la modal; el resto del Sidebar no cambia (nav, footer, usuaria).
-- [ ] La modal es 1:1 con el mockup: tarjeta 580px `#FBF4EC` con borde `#ECE0D0`, header Cancelar/"Nueva publicación"/Publicar, labels uppercase 12px `#94887B`, chips, textarea y fila FOTOS con los colores del diseño.
-- [ ] La modal se cierra con Cancelar, Escape y click en el fondo, y no se cierra al hacer click dentro de la tarjeta.
-- [ ] PARA muestra los 8 niños de `children.ts` con su avatar `{bg, color}` + "Toda la sala", todo sin preselección al abrir.
-- [ ] Se pueden marcar varios niños a la vez; marcar a un niño desactiva "Toda la sala"; activar "Toda la sala" desmarca a todos los niños.
-- [ ] TIPO acepta un solo chip: el seleccionado pasa a fondo sólido con texto blanco y el resto queda en pastel.
-- [ ] El textarea abre vacío con el placeholder "Contá cómo le fue hoy…".
-- [ ] FOTOS abre con el tile placeholder + tile "Agregar"; click en "Agregar" abre el selector nativo y las imágenes elegidas aparecen como tiles con preview.
-- [ ] Soltar 1 o más imágenes sobre la zona FOTOS las añade como tiles sin perder las existentes; los archivos que no son imagen se ignoran.
-- [ ] Arrastrar un tile sobre otro los reordena; la X de un tile lo quita; durante `dragover` el tile "Agregar" muestra el realce de borde `#C5503A`.
-- [ ] Publicar sin niños (ni "Toda la sala"), sin tipo o con descripción vacía muestra los errores inline y no cierra la modal.
-- [ ] Corregir los errores y reenviar cierra la modal sin añadir nada al feed ni persistir nada.
-- [ ] `/` no sufre regresiones: encabezado, tarjeta "Compartí un momento…", divisor y los 3 posts del feed (SPEC 01).
-- [ ] `npx eslint app`, `npx tsc --noEmit` y `npm run build` pasan sin errores.
+- [x] El botón "Nueva publicación" del sidebar conserva el gradiente `#F4977E→#EE8164` y abre la modal; el resto del Sidebar no cambia (nav, footer, usuaria). (✅ verificado: trigger con clases idénticas al original; Sidebar solo cambia `<Link>` por `<CreatePostModal />`, nav/footer intactos)
+- [x] La modal es 1:1 con el mockup: tarjeta 580px `#FBF4EC` con borde `#ECE0D0`, header Cancelar/"Nueva publicación"/Publicar, labels uppercase 12px `#94887B`, chips, textarea y fila FOTOS con los colores del diseño. (✅ verificado: captura en `.playwright-mcp/spec06-modal-abierta.png`; estructura y tokens coinciden con el mockup)
+- [x] La modal se cierra con Cancelar, Escape y click en el fondo, y no se cierra al hacer click dentro de la tarjeta. (✅ verificado: los 3 cierres funcionan; clicks en la tarjeta no la cierran)
+- [x] PARA muestra los 8 niños de `children.ts` con su avatar `{bg, color}` + "Toda la sala", todo sin preselección al abrir. (✅ verificado: snapshot confirma 8 chips con avatares correctos + "Toda la sala", todos en estado no marcado)
+- [x] Se pueden marcar varios niños a la vez; marcar a un niño desactiva "Toda la sala"; activar "Toda la sala" desmarca a todos los niños. (✅ verificado: Mateo+Sofía marcados simultáneamente; exclusividad bidireccional comprobada)
+- [x] TIPO acepta un solo chip: el seleccionado pasa a fondo sólido con texto blanco y el resto queda en pastel. (✅ verificado: Logro seleccionado `#3E9B6C`+blanco, resto en pastel; selección única)
+- [x] El textarea abre vacío con el placeholder "Contá cómo le fue hoy…". (✅ verificado: valor inicial `""`, placeholder presente)
+- [x] FOTOS abre con el tile placeholder + tile "Agregar"; click en "Agregar" abre el selector nativo y las imágenes elegidas aparecen como tiles con preview. (✅ verificado: estado inicial correcto; click en "Agregar" abre file chooser; previews se renderizan vía `URL.createObjectURL`)
+- [x] Soltar 1 o más imágenes sobre la zona FOTOS las añade como tiles sin perder las existentes; los archivos que no son imagen se ignoran. (✅ verificado: drop de 2 PNGs añade tiles; drop de `.txt` se ignora)
+- [x] Arrastrar un tile sobre otro los reordena; la X de un tile lo quita; durante `dragover` el tile "Agregar" muestra el realce de borde `#C5503A`. (✅ verificado: reordenado [mock,f1,f2]→[mock,f2,f1]; X quita tile; código `isFileDragOver` realza borde en `dragover`)
+- [x] Publicar sin niños (ni "Toda la sala"), sin tipo o con descripción vacía muestra los errores inline y no cierra la modal. (✅ verificado: 3 textos de error bajo las filas, borde textarea `#C5503A`, modal permanece abierta)
+- [x] Corregir los errores y reenviar cierra la modal sin añadir nada al feed ni persistir nada. (✅ verificado: submit válido cierra; feed de `/` no cambia)
+- [x] `/` no sufre regresiones: encabezado, tarjeta "Compartí un momento…", divisor y los 3 posts del feed (SPEC 01). (✅ verificado: teaser, badges LOGRO/ACTIVIDAD/ANUNCIO y estructura intactos)
+- [x] `npx eslint app`, `npx tsc --noEmit` y `npm run build` pasan sin errores. (✅ verificado: tsc limpio, eslint 0 errores, build exitoso)
 
 ## Decisiones
 
