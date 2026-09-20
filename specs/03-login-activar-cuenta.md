@@ -1,6 +1,6 @@
 # SPEC 03 — Login `/login` y activación de cuenta `/activate` (mockups `login.dc.html` y `activar-cuenta.dc.html`)
 
-> **Estado:** Aprobado
+> **Estado:** Implementado
 > **Depende de:** SPEC 01
 > **Fecha:** 2026-09-20
 > **Objetivo:** Implementar las pantallas de login y activación de cuenta como rutas `/login` y `/activate`, visualmente idénticas a los mockups pero sin el selector Personal/Familia, con validación básica de formularios y navegación al feed, sin autenticación real.
