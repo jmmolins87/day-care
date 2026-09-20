@@ -46,3 +46,7 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 ## Reglas de código
 
 - Usar código limpio, nombres, funcions, variables, etc en inglés.
+
+## Reglas del Agente
+
+- Responder siempre en español
