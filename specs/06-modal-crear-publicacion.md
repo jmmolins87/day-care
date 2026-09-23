@@ -18,7 +18,7 @@ Retoma el botón "Nueva publicación" que SPEC 01 dejó estático en el Sidebar 
 - Tarjeta 1:1: max-width 580px, fondo `#FBF4EC`, borde `#ECE0D0`, radio 24px, sombra `0 20px 50px -24px rgba(63,54,46,.35)`. Header con Cancelar (`#94887B`, peso 700, 15px) / "Nueva publicación" (Fredoka 600, 18px, `#3F362E`) / Publicar (`#D9583C`, peso 800, 15px).
 - PARA: 8 chips, uno por niño de `children.ts` (avatar circular 26px con `{bg, color}` e `initial` del niño) + chip "Toda la sala". Selección múltiple de niños, sin preselección; "Toda la sala" excluyente: activarla desmarca a los niños y marcar a un niño la desactiva. Chip sin marcar: borde `#ECE0D0`, fondo `#FFFDF9`, texto `#6E6359`; marcado: borde y fondo `#3F362E`, texto blanco (el avatar conserva su color).
 - TIPO: 7 chips de selección única, sin preselección. Sin seleccionar: par pastel del tipo; seleccionado: fondo sólido con texto blanco.
-- DESCRIPCIÓN: textarea blanco, radio 14px, borde 1.5px `#EADFD0`, min-height 120px, `resize: vertical`, placeholder "Contá cómo le fue hoy…", abre vacío.
+- DESCRIPCIÓN: textarea blanco, radio 14px, borde 1.5px `#EADFD0`, min-height 120px, `resize: vertical`, placeholder "Cuéntanos cómo le fue hoy…", abre vacío.
 - FOTOS: fila de tiles 96×96 (radio 14px, gap 12px, wrap). Abre con el tile placeholder del mockup (icono de imagen `#CBB89F` sobre `#F4ECE1`) + tile "Agregar" (dashed `#DBCDBA`, icono + `#C5503A`, texto "Agregar").
 - Drag & drop sobre la zona FOTOS: soltar archivos de imagen añade tiles con preview real vía `URL.createObjectURL`; durante `dragover` el tile "Agregar" realza su borde a `#C5503A`; arrastrar un tile sobre otro los reordena; la X de cada tile lo quita. Click en "Agregar" abre el selector nativo (input file oculto, `accept="image/*"`, múltiple). `URL.revokeObjectURL` al quitar un tile y al cerrar la modal.
 - Validación al Publicar, solo frontend: PARA (al menos 1 niño o "Toda la sala"), TIPO y descripción requeridos. Errores inline: texto `#C5413A` bajo la fila en PARA y TIPO (patrón PARENTESCO de SPEC 05); textarea con borde `#C5503A` y texto `#C5413A` debajo. Submit válido cierra la modal sin persistir.
@@ -95,13 +95,13 @@ El formulario no produce ni persiste un `Post`: Publicar valida y cierra. Reutil
 - [x] PARA muestra los 8 niños de `children.ts` con su avatar `{bg, color}` + "Toda la sala", todo sin preselección al abrir. (✅ verificado: snapshot confirma 8 chips con avatares correctos + "Toda la sala", todos en estado no marcado)
 - [x] Se pueden marcar varios niños a la vez; marcar a un niño desactiva "Toda la sala"; activar "Toda la sala" desmarca a todos los niños. (✅ verificado: Mateo+Sofía marcados simultáneamente; exclusividad bidireccional comprobada)
 - [x] TIPO acepta un solo chip: el seleccionado pasa a fondo sólido con texto blanco y el resto queda en pastel. (✅ verificado: Logro seleccionado `#3E9B6C`+blanco, resto en pastel; selección única)
-- [x] El textarea abre vacío con el placeholder "Contá cómo le fue hoy…". (✅ verificado: valor inicial `""`, placeholder presente)
+- [x] El textarea abre vacío con el placeholder "Cuéntanos cómo le fue hoy…". (✅ verificado: valor inicial `""`, placeholder presente)
 - [x] FOTOS abre con el tile placeholder + tile "Agregar"; click en "Agregar" abre el selector nativo y las imágenes elegidas aparecen como tiles con preview. (✅ verificado: estado inicial correcto; click en "Agregar" abre file chooser; previews se renderizan vía `URL.createObjectURL`)
 - [x] Soltar 1 o más imágenes sobre la zona FOTOS las añade como tiles sin perder las existentes; los archivos que no son imagen se ignoran. (✅ verificado: drop de 2 PNGs añade tiles; drop de `.txt` se ignora)
 - [x] Arrastrar un tile sobre otro los reordena; la X de un tile lo quita; durante `dragover` el tile "Agregar" muestra el realce de borde `#C5503A`. (✅ verificado: reordenado [mock,f1,f2]→[mock,f2,f1]; X quita tile; código `isFileDragOver` realza borde en `dragover`)
 - [x] Publicar sin niños (ni "Toda la sala"), sin tipo o con descripción vacía muestra los errores inline y no cierra la modal. (✅ verificado: 3 textos de error bajo las filas, borde textarea `#C5503A`, modal permanece abierta)
 - [x] Corregir los errores y reenviar cierra la modal sin añadir nada al feed ni persistir nada. (✅ verificado: submit válido cierra; feed de `/` no cambia)
-- [x] `/` no sufre regresiones: encabezado, tarjeta "Compartí un momento…", divisor y los 3 posts del feed (SPEC 01). (✅ verificado: teaser, badges LOGRO/ACTIVIDAD/ANUNCIO y estructura intactos)
+- [x] `/` no sufre regresiones: encabezado, tarjeta "Comparte un momento…", divisor y los 3 posts del feed (SPEC 01). (✅ verificado: teaser, badges LOGRO/ACTIVIDAD/ANUNCIO y estructura intactos)
 - [x] `npx eslint app`, `npx tsc --noEmit` y `npm run build` pasan sin errores. (✅ verificado: tsc limpio, eslint 0 errores, build exitoso)
 
 ## Decisiones

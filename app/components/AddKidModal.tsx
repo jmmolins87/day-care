@@ -46,7 +46,7 @@ function validate(
   if (!name.trim()) errors.name = "El nombre es requerido.";
   const dateError = validateBirthDate(birthDate);
   if (dateError) errors.birthDate = dateError;
-  if (!classroomId) errors.classroom = "Seleccioná una sala.";
+  if (!classroomId) errors.classroom = "Selecciona una sala.";
   return errors;
 }
 
@@ -260,7 +260,7 @@ export default function AddKidModal() {
               <input
                 value={allergies}
                 onChange={(e) => setAllergies(e.target.value)}
-                placeholder="Ej. Maní, Lactosa"
+                placeholder="Ej. Cacahuete, Lactosa"
                 className="w-full py-[13px] px-[16px] rounded-[14px] border-[1.5px] border-[#EADFD0] bg-white text-[15px] text-[#3F362E] mb-[18px] placeholder:text-[#B6A99B]"
               />
 

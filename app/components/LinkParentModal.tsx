@@ -32,9 +32,9 @@ function validate(
   if (!email.trim()) {
     errors.email = "El email es requerido.";
   } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-    errors.email = "Ingresá un email válido.";
+    errors.email = "Introduce un email válido.";
   }
-  if (!relationship) errors.relationship = "Seleccioná un parentesco.";
+  if (!relationship) errors.relationship = "Selecciona un parentesco.";
   return errors;
 }
 

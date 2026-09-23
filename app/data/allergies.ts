@@ -15,7 +15,7 @@ export type AllergyDef = {
 };
 
 export const allergies: Record<AllergyKey, AllergyDef> = {
-  mani: { label: "MANÍ", bg: "#FBD8CC", color: "#D9684A" },
+  mani: { label: "CACAHUETE", bg: "#FBD8CC", color: "#D9684A" },
   lactosa: { label: "LACTOSA", bg: "#C7E7F1", color: "#2E89A6" },
   gluten: { label: "GLUTEN", bg: "#CFEBD8", color: "#3E9B6C" },
   frutos_secos: { label: "FRUTOS SECOS", bg: "#F7E7A6", color: "#9A7B1E" },

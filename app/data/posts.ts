@@ -35,7 +35,7 @@ export const posts: Post[] = [
     author: "Mateo",
     avatarInitial: "M",
     postedTime: "14:20",
-    postedBy: "publicado por vos",
+    postedBy: "publicado por ti",
     recipients: "familia de Mateo",
     content:
       "¡Usó el orinal solito por primera vez! Estaba feliz de contárselo a todos. Un gran paso.",
@@ -48,7 +48,7 @@ export const posts: Post[] = [
     author: "Mateo",
     avatarInitial: "M",
     postedTime: "09:40",
-    postedBy: "publicado por vos",
+    postedBy: "publicado por ti",
     recipients: "familia de Mateo",
     content:
       "Pintamos con témperas esta mañana. Mateo eligió el azul para todo y se concentró un montón mezclando colores.",
@@ -61,10 +61,10 @@ export const posts: Post[] = [
     type: "announcement",
     author: "Anuncio general",
     postedTime: "07:50",
-    postedBy: "publicado por vos",
+    postedBy: "publicado por ti",
     recipients: "toda la sala",
     content:
-      "El viernes salimos al parque por la mañana. Recuerden mandar gorra y una botellita de agua.",
+      "El viernes salimos al parque por la mañana. Recuerden traer gorra y una botella de agua.",
     likes: 8,
     comments: 0,
   },

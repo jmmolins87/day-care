@@ -58,7 +58,7 @@ export const children: Child[] = [
     profile: {
       subtitle: "3 años · Sala Soles",
       allergyNotes:
-        "Alergia al maní. Evitar frutos secos. Lleva inhalador en la mochila.",
+        "Alergia al cacahuete. Evitar frutos secos. Lleva inhalador en la mochila.",
       birthDate: "12 mar 2022",
       classroom: "Soles",
       enrollment: "feb 2025",

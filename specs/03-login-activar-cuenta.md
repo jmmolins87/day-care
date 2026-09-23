@@ -14,7 +14,7 @@ Retoma lo que SPEC 01 dejó fuera de alcance (login/logout visual) e introduce l
 **In:**
 
 - `app/login/page.tsx` nuevo (server): layout de dos paneles — izquierdo con gradiente `155deg #F6A98E→#EC7E62`, círculos decorativos, logo OpenDayCare, titular "El día de cada niño, compartido con su familia." y footer "🌿 Guardería Sala Soles"; derecho con el formulario sobre fondo `#FBF4EC`.
-- `app/components/LoginForm.tsx` nuevo (client): EMAIL, CONTRASEÑA, "¿Olvidaste tu contraseña?" (`href="#"`), CTA "Iniciar sesión" → `/` tras validación, enlace "Activá tu cuenta" → `/activate`. Sin selector "INGRESO COMO".
+- `app/components/LoginForm.tsx` nuevo (client): EMAIL, CONTRASEÑA, "¿Olvidaste tu contraseña?" (`href="#"`), CTA "Iniciar sesión" → `/` tras validación, enlace "Activa tu cuenta" → `/activate`. Sin selector "INGRESO COMO".
 - `app/activate/page.tsx` nuevo (server): tarjeta centrada (max 440px) con logo, "Bienvenida a OpenDayCare", tarjeta de invitación "Mateo · Sala Soles" y `ActivateForm`.
 - `app/components/ActivateForm.tsx` nuevo (client): CÓDIGO DE INVITACIÓN, EMAIL, CREAR CONTRASEÑA, checkbox de autorización de fotos (opcional, no bloquea el submit), CTA "Activar mi cuenta" → `/` tras validación, enlace "Iniciar sesión" → `/login`.
 - `app/data/invitation.ts` nuevo: mock tipado de la invitación.
@@ -60,9 +60,9 @@ El login no introduce datos nuevos: el email demo (`caro@opendaycare.com`) vive 
 - [x] `/login` y `/activate` cargan con `npm run dev` sin errores en consola. (✅ verificado: 0 errores de consola en ambas rutas, title "OpenDayCare")
 - [x] `/login` no renderiza el selector "INGRESO COMO" ni los botones Personal/Familia. (✅ verificado: grep sin matches en `app/login` y `app/components`; snapshot de Playwright sin esos nodos)
 - [x] `/login` es 1:1 con el mockup: panel izquierdo con gradiente y copy, campos EMAIL/CONTRASEÑA, "¿Olvidaste tu contraseña?" y CTA "Iniciar sesión". (✅ verificado: screenshot vs `login.dc.html` — layout, gradiente, copy y campos idénticos salvo el selector eliminado por decisión; corregido color de enlaces a `#C5503A`)
-- [x] Un submit inválido (email vacío o mal formado, contraseña vacía) muestra error inline y no navega. El checkbox de consentimiento es opcional y no bloquea el submit. (✅ verificado: login con "no-es-un-email" + password vacía muestra "Ingresá un email válido." y "La contraseña es requerida." sin navegar; activate con "email-roto" muestra error inline sin navegar; submit con checkbox desmarcado funciona correctamente)
+- [x] Un submit inválido (email vacío o mal formado, contraseña vacía) muestra error inline y no navega. El checkbox de consentimiento es opcional y no bloquea el submit. (✅ verificado: login con "no-es-un-email" + password vacía muestra "Introduce un email válido." y "La contraseña es requerida." sin navegar; activate con "email-roto" muestra error inline sin navegar; submit con checkbox desmarcado funciona correctamente)
 - [x] Un submit válido en ambos formularios navega a `/`. (✅ verificado: click en "Iniciar sesión" y en "Activar mi cuenta" con datos válidos lleva a `http://localhost:3000/`)
-- [x] "Activá tu cuenta" en `/login` enlaza a `/activate`, y "Iniciar sesión" en `/activate` enlaza a `/login`. (✅ verificado: snapshot muestra `/url: /activate` y `/url: /login` respectivamente)
+- [x] "Activa tu cuenta" en `/login` enlaza a `/activate`, y "Iniciar sesión" en `/activate` enlaza a `/login`. (✅ verificado: snapshot muestra `/url: /activate` y `/url: /login` respectivamente)
 - [x] `/activate` es 1:1 con el mockup: tarjeta "Te invitaron a seguir a / Mateo · Sala Soles", código "7K4P9", email de Lucía y checkbox de autorización. (✅ verificado: screenshot vs `activar-cuenta.dc.html` — logo, tarjeta de invitación, campos precargados, consent marcado en verde y CTA idénticos)
 - [x] El botón "Cerrar sesión" del Sidebar navega a `/login`. (✅ verificado: snapshot muestra `/url: /login`; click navega a `http://localhost:3000/login`)
 - [x] `npx eslint app`, `npx tsc --noEmit` y `npm run build` pasan sin errores. (✅ verificado: eslint y tsc con salida vacía; build genera `/login` y `/activate` como rutas estáticas)
