@@ -33,8 +33,8 @@ function validate(
 ): FormErrors {
   const errors: FormErrors = {};
   if (selectedChildSlugs.length === 0 && !allClassroom)
-    errors.recipients = "Elegí al menos un niño o Toda la sala.";
-  if (!selectedType) errors.type = "Elegí un tipo de publicación.";
+    errors.recipients = "Elige al menos un niño o Toda la sala.";
+  if (!selectedType) errors.type = "Elige un tipo de publicación.";
   if (!description.trim()) errors.description = "La descripción es requerida.";
   return errors;
 }
@@ -358,7 +358,7 @@ export default function CreatePostModal() {
                     setErrors({ ...errors, description: undefined });
                 }}
                 onBlur={() => handleBlur("description")}
-                placeholder="Contá cómo le fue hoy…"
+                placeholder="Cuéntanos cómo le fue hoy…"
                 className={`w-full min-h-[120px] resize-y py-[14px] px-[16px] rounded-[14px] border-[1.5px] bg-white text-[15px] text-[#3F362E] leading-[1.5] placeholder:text-[#B6A99B] ${
                   showError("description")
                     ? "border-[#C5503A] mb-[6px]"

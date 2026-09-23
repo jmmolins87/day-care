@@ -15,7 +15,7 @@ export default function LoginForm() {
     if (!email.trim()) {
       newErrors.email = "El email es requerido.";
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      newErrors.email = "Ingresá un email válido.";
+      newErrors.email = "Introduce un email válido.";
     }
     if (!password.trim()) {
       newErrors.password = "La contraseña es requerida.";
@@ -37,7 +37,7 @@ export default function LoginForm() {
         Iniciar sesión
       </h2>
       <p className="mb-[28px] text-[#94887B] text-[15px]">
-        Ingresá para ver el día de hoy.
+        Accede para ver el día de hoy.
       </p>
 
       <form noValidate onSubmit={handleSubmit}>
@@ -89,7 +89,7 @@ export default function LoginForm() {
       <p className="text-center mt-[24px] text-[#94887B] text-[14.5px]">
         ¿Te invitó la guardería?{" "}
         <Link href="/activate" className="!text-[#C5503A] font-[800]">
-          Activá tu cuenta
+          Activa tu cuenta
         </Link>
       </p>
     </div>

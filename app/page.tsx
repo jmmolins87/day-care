@@ -29,7 +29,7 @@ export default function Home() {
               C
             </div>
             <span className="flex-1 text-[#A89A8B] text-[15px]">
-              Compartí un momento…
+              Comparte un momento…
             </span>
             <span className="w-[38px] h-[38px] rounded-[12px] bg-[#FBE3D8] text-[#E0654A] flex items-center justify-center flex-none">
               <svg

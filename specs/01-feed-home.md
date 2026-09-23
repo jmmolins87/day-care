@@ -13,7 +13,7 @@ Es la primera pantalla de la app y sienta dos bases para las specs siguientes: l
 
 **In:**
 
-- `app/page.tsx` reescrito como home `/`: sidebar + encabezado ("Buenas, Caro") + tarjeta "Compartí un momento…" + divisor "PUBLICADO HOY" + lista de 3 publicaciones.
+- `app/page.tsx` reescrito como home `/`: sidebar + encabezado ("Buenas, Caro") + tarjeta "Comparte un momento…" + divisor "PUBLICADO HOY" + lista de 3 publicaciones.
 - `app/components/Sidebar.tsx` nuevo: marca OpenDayCare, botón "Nueva publicación", nav (Feed activo, Niños, Avisos, Mi cuenta), footer de usuaria "Caro Giménez" con botón de salir.
 - `app/components/PostCard.tsx` nuevo: tarjeta de publicación con soporte para los 3 tipos del mockup (`achievement`, `activity`, `announcement` — mostrados en UI como LOGRO, ACTIVIDAD, ANUNCIO) y foto placeholder opcional.
 - `app/data/posts.ts` nuevo: mock tipado con usuaria, sala y las 3 publicaciones.
@@ -70,7 +70,7 @@ export const typeLabel: Record<PostTipo, string> = {
 3. Actualizar `app/layout.tsx`: Fredoka (400–700) y Nunito (400–800) vía `next/font/google` como variables CSS, `lang="es"`, metadata `title: "OpenDayCare"`.
 4. Crear `app/components/Sidebar.tsx` (248px, sticky, `#FFFDF9`): logo con gradiente `155deg #F8C3A8→#F2937A`, botón "Nueva publicación" con gradiente `180deg #F4977E→#EE8164`, nav con Feed activo (`#FBE3D8`/`#D9583C`), footer de usuaria y botón salir. Feed enlaza a `/`; el resto usa `href="#"`.
 5. Crear `app/components/PostCard.tsx`: header (avatar 44px, nombre en Fredoka, hora, badge pill según tipo: achievement `#CFEBD8`/`#3E9B6C` → pinta "LOGRO", activity `#C7E7F1`/`#2E89A6` → pinta "ACTIVIDAD", announcement `#CCD8F4`/`#4E72C8` → pinta "ANUNCIO"), "Para: …", texto, foto placeholder punteada opcional (200px, `#F4ECE1`, borde `1.5px dashed #DBCDBA`), footer con corazones, comentarios y "Editar". SVGs inline copiados del mockup.
-6. Reescribir `app/page.tsx` (Server Component): Sidebar + main de 760px con kicker "GUARDERÍA · SALA SOLES", h1 "Buenas, Caro", "12 niños · martes 17 jun", tarjeta "Compartí un momento…", divisor "PUBLICADO HOY" y `posts.map(PostCard)`. Verificar: `npm run dev` → http://localhost:3000.
+6. Reescribir `app/page.tsx` (Server Component): Sidebar + main de 760px con kicker "GUARDERÍA · SALA SOLES", h1 "Buenas, Caro", "12 niños · martes 17 jun", tarjeta "Comparte un momento…", divisor "PUBLICADO HOY" y `posts.map(PostCard)`. Verificar: `npm run dev` → http://localhost:3000.
 7. Ajuste fino visual contra `references/pantallas/feed.dc.html` (sombras rgba, letter-spacing, radios) y chequeo final: `npx eslint app` y `npx tsc --noEmit` sin errores.
 
 ## Criterios de aceptación
@@ -90,7 +90,7 @@ export const typeLabel: Record<PostTipo, string> = {
 - **Sí:** mock tipado en `app/data/posts.ts` — se sustituye por una API futura sin tocar componentes.
 - **No:** textos hardcodeados en el JSX — mezcla datos y vista.
 - **Sí:** `Sidebar` y `PostCard` como componentes — se reutilizan en specs futuras.
-- **No:** header y tarjeta "Compartí un momento…" como componentes — específicos del home.
+- **No:** header y tarjeta "Comparte un momento…" como componentes — específicos del home.
 - **Sí:** Tailwind v4 con tokens `@theme` + valores arbitrarios — convención del repo.
 - **No:** CSS inline literal del mockup — no escala al resto de pantallas.
 - **Sí:** SVGs inline copiados del mockup — cero dependencias nuevas.

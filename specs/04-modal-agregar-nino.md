@@ -52,7 +52,7 @@ type AddKidForm = {
   name: string;        // "Ej. Martina López"
   birthDate: string;   // mascarado "dd/mm/aaaa"
   classroomId: string; // defaultClassroomId al abrir
-  allergies: string;   // texto libre, "Ej. Maní, Lactosa"
+  allergies: string;   // texto libre, "Ej. Cacahuete, Lactosa"
   medicalNotes: string;
 };
 ```
@@ -71,7 +71,7 @@ El formulario no produce ni persiste un objeto `Child`: Guardar valida y cierra.
 ## Criterios de aceptación
 
 - [x] El botón "Agregar niño" de `/kids` abre la modal y muestra icono con stroke `#C5503A` y texto blanco sobre el gradiente `#F4977E→#EE8164`.
-- [x] La modal es 1:1 con el mockup: tarjeta `#FBF4EC` de 520px con borde `#ECE0D0`, header Cancelar/título/Guardar, labels uppercase 12px `#94887B`, inputs blancos radio 14px con borde `#EADFD0` y placeholders "Ej. Martina López", "dd/mm/aaaa", "Ej. Maní, Lactosa", "Indicaciones, medicación, contactos…".
+- [x] La modal es 1:1 con el mockup: tarjeta `#FBF4EC` de 520px con borde `#ECE0D0`, header Cancelar/título/Guardar, labels uppercase 12px `#94887B`, inputs blancos radio 14px con borde `#EADFD0` y placeholders "Ej. Martina López", "dd/mm/aaaa", "Ej. Cacahuete, Lactosa", "Indicaciones, medicación, contactos…".
 - [x] La modal se cierra con Cancelar, Escape y click en el fondo, y no se cierra al hacer click dentro de la tarjeta.
 - [x] El select SALA lista las 4 salas del mock con chevron como el del mockup y "Soles" preseleccionada al abrir.
 - [x] Escribir `20102022` en la fecha produce `20/10/2022`; no acepta letras ni más de 10 caracteres.

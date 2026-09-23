@@ -24,7 +24,7 @@ export default function ActivateForm() {
     if (!email.trim()) {
       newErrors.email = "El email es requerido.";
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      newErrors.email = "Ingresá un email válido.";
+      newErrors.email = "Introduce un email válido.";
     }
     if (!password.trim()) {
       newErrors.password = "La contraseña es requerida.";
@@ -62,7 +62,7 @@ export default function ActivateForm() {
         Bienvenida a OpenDayCare
       </h1>
       <p className="mb-[26px] text-[#94887B] text-[15.5px] leading-[1.55]">
-        Te invitaron a seguir el día de tu hijo. Creá tu contraseña para activar
+        Te invitaron a seguir el día de tu hijo. Crea tu contraseña para activar
         la cuenta.
       </p>
 
@@ -165,7 +165,7 @@ export default function ActivateForm() {
       </form>
 
       <p className="text-center mt-[22px] text-[#94887B] text-[14.5px]">
-        ¿Ya tenés cuenta?{" "}
+        ¿Ya tienes cuenta?{" "}
         <Link href="/login" className="!text-[#C5503A] font-[800]">
           Iniciar sesión
         </Link>
