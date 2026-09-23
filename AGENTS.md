@@ -38,6 +38,15 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 - PLaywright Screenshots y cualquier cosa relacionada a Playwright tiene que estar en la carpeta .playwright-mcp
 - Context7 Usaremos este MCP par traer la documentación actualizada del framework.
 
+## Global Skills
+
+The following skills are available globally from `/Users/juanmamc/.config/opencode/skills/`:
+
+- `supabase` - Use when doing ANY task involving Supabase. Products: Database, Auth, Edge Functions, Realtime, Storage, Vectors, Cron, Queues; client libraries and SSR integrations in Next.js, React, SvelteKit, Astro, Remix; auth issues; Supabase CLI or MCP server; schema changes, migrations, declarative schemas, security audits, Postgres extensions; debugging and troubleshooting errors or unexpected behavior on Supabase projects.
+- `supabase-postgres-best-practices` - Postgres best practices maintained by Supabase for creating/altering tables and columns, schema design, migrations, RLS policies, indexes, triggers, database functions, pg_cron, pgmq, pgvector, restoring dumps, and debugging slow queries.
+- `spec` - Designs and develops specs following the spec-driven method. Asks clarifying questions before proposing structure, and builds the spec section by section. Use it when starting a large feature, before writing code.
+- `spec-impl` - Implements an approved spec. Validates that the state means "Approved" (in any language), creates a git branch named after the spec, switches to it, and starts the implementation step by step with pauses to review diffs.
+
 ## Spec Driven Developments - Skills
 
 - /spec Usaremos esta habilidad para crear las especificaciones.
