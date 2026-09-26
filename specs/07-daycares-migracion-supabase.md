@@ -1,6 +1,6 @@
 # SPEC 07 — Tabla `daycares` en Supabase con patrón de migraciones CLI
 
-> **Estado:** Implementado
+> **Estado:** Aprobado
 > **Depende de:** Ninguna
 > **Fecha:** 2026-09-26
 > **Objetivo:** Crear la tabla `daycares` (sección 1 de `07-DB-Schema/opendaycare-database-schema.md`) en el proyecto remoto de Supabase mediante una migración versionada con Supabase CLI, con seed inicial de 4 guarderías (principal: Guardería Sala Soles), sin RLS y sin tocar `app/`.
