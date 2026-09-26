@@ -33,6 +33,12 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 - Spec-driven: use the `spec` skill to draft a spec before large features, `spec-impl` to implement an approved spec (it creates and switches to its own branch).
 - `CLAUDE.md` only imports this file (`@AGENTS.md`) — make edits here.
 
+## Base de datos (Supabase)
+
+- Toda manipulación del esquema (crear/alterar tablas, columnas, índices, extensiones, seeds estructurales, RLS/policies, funciones, triggers) se hace SIEMPRE con migraciones versionadas de Supabase CLI en `supabase/migrations/` y se aplica con `supabase db push`. Sin excepciones.
+- Prohibido DDL ad-hoc contra el remoto (SQL editor, `apply_migration` del MCP, `execute_sql` con CREATE/ALTER/DROP/INSERT/UPDATE/DELETE). El MCP de Supabase se usa solo para verificación de lectura (SELECT sobre `information_schema`, `pg_tables`, `pg_policies`, conteos).
+- Flujo obligatorio: `supabase migration new <nombre>` → volcar DDL/seed en el archivo generado → `supabase db push --dry-run` → `supabase db push` → verificar en remoto (`migration list` + SELECTs).
+
 ## MCPs
 
 - PLaywright Screenshots y cualquier cosa relacionada a Playwright tiene que estar en la carpeta .playwright-mcp
