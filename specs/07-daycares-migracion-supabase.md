@@ -67,14 +67,14 @@ Esta spec no introduce estructuras en `app/` ni tipos TypeScript.
 
 ## Criterios de aceptación
 
-- [ ] Existe `supabase/migrations/*_create_daycares.sql` versionado en git con el DDL + seed exactos del modelo de datos.
-- [ ] `supabase db push` aplica sin errores contra el remoto.
-- [ ] `SELECT tablename FROM pg_tables WHERE schemaname='public'` incluye `daycares`.
-- [ ] Las columnas son exactamente `id uuid`, `name text`, `created_at timestamptz` (verificado vía `information_schema`).
-- [ ] `daycares` no tiene RLS activado ni policies en esta spec.
-- [ ] `SELECT count(*) FROM public.daycares` devuelve 4.
-- [ ] Existe la fila "Guardería Sala Soles".
-- [ ] Ningún archivo bajo `app/` fue modificado ni se añadió dependencia (`package.json` intacto).
+- [x] Existe `supabase/migrations/*_create_daycares.sql` versionado en git con el DDL + seed exactos del modelo de datos. (✅ verificado: `supabase/migrations/20260926114822_create_daycares.sql` trackeado en git, commit `57211e9`, contenido idéntico al modelo de datos)
+- [x] `supabase db push` aplica sin errores contra el remoto. (✅ verificado: migración `20260926114822 create_daycares` aparece como aplicada en `list_migrations` y la tabla existe con datos en remoto)
+- [x] `SELECT tablename FROM pg_tables WHERE schemaname='public'` incluye `daycares`. (✅ verificado: `pg_tables` devuelve `daycares`)
+- [x] Las columnas son exactamente `id uuid`, `name text`, `created_at timestamptz` (verificado vía `information_schema`). (✅ verificado: `information_schema` devuelve `id uuid`, `name text`, `created_at timestamp with time zone`)
+- [x] `daycares` no tiene RLS activado ni policies en esta spec. (✅ verificado: `pg_class.relrowsecurity=false`, `pg_policies` 0 filas, `list_tables rls_enabled=false`)
+- [x] `SELECT count(*) FROM public.daycares` devuelve 4. (✅ verificado: `count=4`)
+- [x] Existe la fila "Guardería Sala Soles". (✅ verificado: `SELECT` devuelve la fila `Guardería Sala Soles` id `bf5d6198-17d5-42c3-bf3e-aaecbd688c87`)
+- [x] Ningún archivo bajo `app/` fue modificado ni se añadió dependencia (`package.json` intacto). (✅ verificado: `git status --short` limpio, `git diff HEAD --stat -- app/ package.json` vacío)
 
 ## Decisiones
 
